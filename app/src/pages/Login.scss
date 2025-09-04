@@ -1,0 +1,185 @@
+@import "../styles/variables.scss"; // importa variáveis globais (cores, espaçamentos etc.)
+
+.login-page {
+  display: flex; // divide em 2 colunas (esquerda e direita)
+  min-height: 100vh; // ocupa a tela toda na vertical
+
+  .left-side {
+    flex: 0.4; // ocupa 40% da largura
+    background-color: $secondary-color; // cor de fundo definida nas variáveis
+    display: flex;
+    align-items: center; // centraliza verticalmente
+    justify-content: center; // centraliza horizontalmente
+
+    .logo {
+      text-align: center; // logo alinhada no centro
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      max-width: 500px; // limita tamanho máximo
+      width: 100%; // ocupa toda largura disponível até o limite
+    }
+  }
+
+  .right-side {
+    flex: 0.6; // ocupa 60% da largura
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .form-container {
+      width: 80%; // largura padrão do formulário
+      max-width: 600px; // largura máxima
+      min-width: 300px; // largura mínima
+      min-height: 500px; // altura mínima
+      display: flex;
+      flex-direction: column;
+      justify-content: center; // centraliza conteúdo
+      background-color: #dad9d9; // fundo cinza claro
+      padding: 4rem 2rem; // espaçamento interno
+      border-radius: 10px; // bordas arredondadas
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); // sombra suave
+
+      @media (max-width: 768px) {
+        width: 90%; // ocupa quase toda tela no mobile
+        padding: 2.5rem 1.5rem; // reduz padding
+      }
+
+      h2 {
+        font-size: 1rem;
+        color: #444;
+        margin-bottom: 0.25rem; // espaço abaixo
+      }
+
+      h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: $primary-color; // cor primária
+        margin-bottom: 1.5rem; // espaço abaixo
+      }
+
+      // grupo que envolve input + ícone + botão de senha
+      .input-group {
+        position: relative; // necessário para posicionar o botão 👁 dentro
+        display: flex;
+        align-items: center;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 0.6rem 0.8rem;
+        margin-bottom: 1rem;
+        background: #fff;
+        transition: border-color 0.3s, box-shadow 0.3s; // animação ao focar
+
+        &:focus-within {
+          border-color: $primary-color; // borda muda quando input está em foco
+          box-shadow: 0 0 0 3px rgba($primary-color, 0.15); // efeito glow
+        }
+
+        .icon {
+          font-size: 1.2rem;
+          margin-right: 0.6rem; // separa do input
+          color: #888;
+          flex-shrink: 0; // impede de encolher
+        }
+
+        .input-content {
+          display: flex;
+          flex-direction: column; // label em cima, input embaixo
+          flex: 1; // ocupa todo espaço disponível
+
+          label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 0.15rem;
+          }
+
+          input {
+            border: none; // remove borda padrão
+            outline: none; // remove highlight padrão
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #222;
+            width: 100%;
+            background: transparent; // mantém fundo transparente
+            padding-right: 2rem; // espaço extra pro botão 👁
+
+            &::placeholder {
+              color: #aaa; // placeholder mais claro
+              font-weight: normal;
+            }
+          }
+        }
+
+        // botão para mostrar/ocultar senha 👁
+        .toggle-password {
+          position: absolute;
+          right: 0.8rem; // gruda na borda direita
+          top: 50%;
+          transform: translateY(-50%); // centraliza verticalmente
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 1.2rem;
+          color: #666;
+          transition: color 0.3s;
+          width: auto; // impede de ocupar toda a largura
+          line-height: 1; // alinha verticalmente
+          z-index: 1; // fica acima do input
+
+          &:hover { color: #000; } // escurece no hover
+        }
+      }
+
+      // rodapé do formulário (remember me + esqueci senha)
+      .form-footer {
+        display: flex;
+        justify-content: space-between; // espaça os itens
+        align-items: center;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+
+        label {
+          display: flex;
+          align-items: center;
+          gap: 0.3rem; // espaçamento entre checkbox e texto
+        }
+
+        a {
+          color: $primary-color;
+          font-weight: 500;
+          text-decoration: none;
+
+          &:hover { text-decoration: underline; }
+        }
+      }
+
+      // botão principal de login
+      > button[type="submit"] {
+        width: 100%; // ocupa toda a largura
+        background-color: $primary-color;
+        color: white;
+        padding: 0.75rem 0;
+        border-radius: 6px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+
+        &:hover { background-color: darken($primary-color, 8%); } // efeito hover
+      }
+
+      // texto abaixo do botão (ex: ainda não tem conta?)
+      p {
+        margin-top: 1rem;
+        text-align: center;
+        font-size: 0.875rem;
+
+        a {
+          color: $primary-color;
+          &:hover { text-decoration: underline; }
+        }
+      }
+    }
+  }
+}

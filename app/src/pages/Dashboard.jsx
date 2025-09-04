@@ -1,7 +1,9 @@
+import "./Dashboard.scss";
+
 export default function Dashboard() {
   return (
-    <div style={{ textAlign: "center", padding: "2rem" }}>
-      <h1>Dashboard</h1>
-    </div>
+    <div className="dashboard-page">
+  <h1>Dashboard</h1>
+</div>
   );
 }
