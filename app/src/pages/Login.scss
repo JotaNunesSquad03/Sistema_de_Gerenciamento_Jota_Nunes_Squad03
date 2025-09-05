@@ -6,61 +6,61 @@
 
   .left-side {
     flex: 0.4; // ocupa 40% da largura
-    background-color: $secondary-color; // cor de fundo definida nas variáveis
+    background-color: $secondary-color;
     display: flex;
-    align-items: center; // centraliza verticalmente
-    justify-content: center; // centraliza horizontalmente
+    align-items: center;
+    justify-content: center;
 
     .logo {
-      text-align: center; // logo alinhada no centro
+      text-align: center;
       color: white;
       font-size: 2rem;
       font-weight: bold;
-      max-width: 500px; // limita tamanho máximo
-      width: 100%; // ocupa toda largura disponível até o limite
+      max-width: 500px;
+      width: 100%;
     }
   }
 
   .right-side {
-    flex: 0.6; // ocupa 60% da largura
+    flex: 0.6;
     display: flex;
     align-items: center;
     justify-content: center;
 
     .form-container {
-      width: 80%; // largura padrão do formulário
-      max-width: 600px; // largura máxima
-      min-width: 300px; // largura mínima
-      min-height: 500px; // altura mínima
+      width: 80%;
+      max-width: 600px;
+      min-width: 300px;
+      min-height: 500px;
       display: flex;
       flex-direction: column;
-      justify-content: center; // centraliza conteúdo
-      background-color: #dad9d9; // fundo cinza claro
-      padding: 4rem 2rem; // espaçamento interno
-      border-radius: 10px; // bordas arredondadas
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); // sombra suave
+      justify-content: center;
+      background-color: #dad9d9;
+      padding: 4rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
       @media (max-width: 768px) {
-        width: 90%; // ocupa quase toda tela no mobile
-        padding: 2.5rem 1.5rem; // reduz padding
+        width: 90%;
+        padding: 2.5rem 1.5rem;
       }
 
       h2 {
         font-size: 2rem;
         color: #444;
-        margin-bottom: -30px; // espaço abaixo
+        margin-bottom: -30px;
       }
 
       h1 {
         font-size: 3rem;
         font-weight: 700;
-        color: $primary-color; // cor primária
-        margin-bottom: 1.5rem; // espaço abaixo
+        color: $primary-color;
+        margin-bottom: 1.5rem;
       }
 
       // grupo que envolve input + ícone + botão de senha
       .input-group {
-        position: relative; // necessário para posicionar o botão 👁 dentro
+        position: relative;
         display: flex;
         align-items: center;
         border: 1px solid #ddd;
@@ -68,24 +68,26 @@
         padding: 0.6rem 0.8rem;
         margin-bottom: 1rem;
         background: #fff;
-        transition: border-color 0.3s, box-shadow 0.3s; // animação ao focar
+        transition: border-color 0.3s, box-shadow 0.3s;
 
         &:focus-within {
-          border-color: $primary-color; // borda muda quando input está em foco
-          box-shadow: 0 0 0 3px rgba($primary-color, 0.15); // efeito glow
+          border-color: $primary-color;
+          box-shadow: 0 0 0 3px rgba($primary-color, 0.15);
         }
 
+        // ícone do Lucide
         .icon {
-          font-size: 1.2rem;
-          margin-right: 0.6rem; // separa do input
+          width: 20px;
+          height: 20px;
+          margin-right: 0.6rem;
           color: #888;
-          flex-shrink: 0; // impede de encolher
+          flex-shrink: 0;
         }
 
         .input-content {
           display: flex;
-          flex-direction: column; // label em cima, input embaixo
-          flex: 1; // ocupa todo espaço disponível
+          flex-direction: column;
+          flex: 1;
 
           label {
             font-size: 0.8rem;
@@ -95,51 +97,51 @@
           }
 
           input {
-            border: none; // remove borda padrão
-            outline: none; // remove highlight padrão
+            border: none;
+            outline: none;
             font-size: 0.95rem;
             font-weight: 500;
             color: #222;
             width: 100%;
-            background: transparent; // mantém fundo transparente
-            padding-right: 2rem; // espaço extra pro botão de senha
+            background: transparent;
+            padding-right: 2rem;
 
             &::placeholder {
-              color: #aaa; // placeholder mais claro
+              color: #aaa;
               font-weight: normal;
             }
           }
         }
 
-        // botão para mostrar/ocultar senha (Bootstrap Icons)
+        // botão para mostrar/ocultar senha (agora com Lucide)
         .toggle-password {
           position: absolute;
-          right: 0.8rem; // gruda na borda direita
+          right: 0.8rem;
           top: 50%;
-          transform: translateY(-50%); // centraliza verticalmente
+          transform: translateY(-50%);
           background: none;
           border: none;
           cursor: pointer;
-          font-size: 1.2rem;
           color: #666;
           transition: color 0.3s;
-          line-height: 1; // evita desalinhamento
-          z-index: 1; // fica acima do input
-
-          i {
-            pointer-events: none; // evita bloquear o clique
-          }
+          line-height: 1;
+          z-index: 1;
 
           &:hover {
-            color: #000; // escurece no hover
+            color: #000;
+          }
+
+          svg {
+            width: 20px;
+            height: 20px;
+            pointer-events: none; // evita bloquear clique
           }
         }
       }
 
-      // rodapé do formulário (remember me + esqueci senha)
       .form-footer {
         display: flex;
-        justify-content: space-between; // espaça os itens
+        justify-content: space-between;
         align-items: center;
         font-size: 0.85rem;
         margin-bottom: 1rem;
@@ -147,7 +149,7 @@
         label {
           display: flex;
           align-items: center;
-          gap: 0.3rem; // espaçamento entre checkbox e texto
+          gap: 0.3rem;
         }
 
         a {
@@ -161,9 +163,8 @@
         }
       }
 
-      // botão principal de login
       > button[type="submit"] {
-        width: 100%; // ocupa toda a largura
+        width: 100%;
         background-color: $primary-color;
         color: white;
         padding: 0.75rem 0;
@@ -174,11 +175,10 @@
         transition: background 0.3s;
 
         &:hover {
-          background-color: darken($primary-color, 8%); // efeito hover
+          background-color: darken($primary-color, 8%);
         }
       }
 
-      // texto abaixo do botão (ex: ainda não tem conta?)
       p {
         margin-top: 1rem;
         text-align: center;
