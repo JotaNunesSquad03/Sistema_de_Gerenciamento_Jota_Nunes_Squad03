@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../components/sidebar.scss';
 import logo from "../assets/logo-jotanunes.png"; // coloque sua logo aqui
+import { IconName } from "react-icons/bs";
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: 'bi-speedometer2' },
