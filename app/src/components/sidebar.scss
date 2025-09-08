@@ -1,0 +1,160 @@
+@import "../styles/variables.scss"; // importa variáveis globais (cores, espaçamentos etc.)
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: $sidebar-width;
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, $sidebar-bg 0%, $sidebar-bg-grad-end 100%);
+  color: $text-color;
+  box-shadow: inset -1px 0 0 rgba(255,255,255,0.02);
+  z-index: 40;
+  transition: width .18s ease;
+
+  // topo (logo)
+  &__top {
+    .sidebar__logo {
+      display: flex;
+      flex-direction: column; // organiza logo e texto em coluna
+      justify-content: center; // centraliza verticalmente
+      align-items: center; // centraliza horizontalmente
+      height: 80px;
+      text-align: center;
+
+      img {
+        height: 50px;
+        width: auto;
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .sidebar__brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center; // centraliza o texto também
+        .brand__title {
+          font-weight: 700;
+          font-size: 16px;
+          color: #fff;
+          line-height: 1;
+        }
+        .brand__subtitle {
+          margin-top: 4px;
+          color: $muted;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  // navegação
+  &__nav {
+    margin-top: 22px;
+    flex: 1;
+    overflow: auto;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        margin-bottom: 10px;
+
+        .sidebar__link {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 10px 12px;
+          border-radius: 10px;
+          color: $text-color;
+          text-decoration: none;
+          transition: transform .18s ease, background .18s ease, color .18s ease;
+          will-change: transform;
+
+          .sidebar__icon {
+            font-size: 18px;
+            width: 28px;
+            text-align: center;
+            color: $muted;
+          }
+          .sidebar__label {
+            font-weight: 600;
+            font-size: 14px;
+            white-space: nowrap;
+          }
+
+          &:hover {
+            transform: translateX(8px);
+            background: $hover-bg;
+            .sidebar__icon { color: $accent; }
+          }
+        }
+
+        &.active .sidebar__link {
+          background: rgba(214,58,58,0.08); // leve fundo vermelho
+          border: 1px solid rgba(214,58,58,0.14);
+          color: $accent;
+          box-shadow: 0 8px 22px rgba(214,58,58,0.06);
+
+          .sidebar__icon {
+            color: $accent;
+          }
+        }
+      }
+    }
+  }
+
+  // rodapé (logout)
+  &__bottom {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.03);
+
+    .sidebar__logout {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      width: 100%;
+      background: transparent;
+      border: 0;
+      color: $muted;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform .16s ease, color .16s ease;
+
+      &:hover {
+        transform: translateX(6px);
+        color: $accent;
+      }
+    }
+  }
+
+  // comportamento responsivo: colapsa para ícones apenas
+  @media (max-width: 900px) {
+    width: $sidebar-collapsed-width;
+
+    .sidebar__brand { display: none; }
+    .sidebar__nav ul li .sidebar__link {
+      justify-content: center;
+      padding: 10px 6px;
+      .sidebar__label { display: none; }
+    }
+    .sidebar__bottom .sidebar__logout { justify-content: center; .sidebar__label { display: none; } }
+  }
+}
+
+/* main-content helper — facilita adicionar margem ao conteúdo principal */
+.main-content {
+  margin-left: $sidebar-width;
+  transition: margin-left .18s ease;
+  @media (max-width: 900px) {
+    margin-left: $sidebar-collapsed-width;
+  }
+}
