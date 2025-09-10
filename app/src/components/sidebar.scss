@@ -2,159 +2,171 @@
 
 .sidebar {
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
   height: 100vh;
   width: $sidebar-width;
-  padding: 22px 18px;
+  background: $sidebar-bg;
+  color: $text-light;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, $sidebar-bg 0%, $sidebar-bg-grad-end 100%);
-  color: $text-color;
-  box-shadow: inset -1px 0 0 rgba(255,255,255,0.02);
-  z-index: 40;
-  transition: width .18s ease;
+  justify-content: space-between;
+  padding: 20px 15px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.4);
 
-  // topo (logo)
+  // Topo: logo + portal + linha
   &__top {
-    .sidebar__logo {
-      display: flex;
-      flex-direction: column; // organiza logo e texto em coluna
-      justify-content: center; // centraliza verticalmente
-      align-items: center; // centraliza horizontalmente
-      height: 80px;
-      text-align: center;
-
-      img {
-        height: 50px;
-        width: auto;
-        display: block;
-        margin-bottom: 6px;
-      }
-
-      .sidebar__brand {
-        display: flex;
-        flex-direction: column;
-        align-items: center; // centraliza o texto também
-        .brand__title {
-          font-weight: 700;
-          font-size: 16px;
-          color: #fff;
-          line-height: 1;
-        }
-        .brand__subtitle {
-          margin-top: 4px;
-          color: $muted;
-          font-size: 12px;
-        }
-      }
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  // navegação
-  &__nav {
-    margin-top: 22px;
-    flex: 1;
-    overflow: auto;
+  &__logo {
+    width: 150px;       // ✅ largura mais compacta
+    margin-bottom: 50px; // ✅ aproxima mais do portal
+    margin-top: 10px;
 
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-
-      li {
-        margin-bottom: 10px;
-
-        .sidebar__link {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 10px 12px;
-          border-radius: 10px;
-          color: $text-color;
-          text-decoration: none;
-          transition: transform .18s ease, background .18s ease, color .18s ease;
-          will-change: transform;
-
-          .sidebar__icon {
-            font-size: 18px;
-            width: 28px;
-            text-align: center;
-            color: $muted;
-          }
-          .sidebar__label {
-            font-weight: 600;
-            font-size: 14px;
-            white-space: nowrap;
-          }
-
-          &:hover {
-            transform: translateX(8px);
-            background: $hover-bg;
-            .sidebar__icon { color: $accent; }
-          }
-        }
-
-        &.active .sidebar__link {
-          background: rgba(214,58,58,0.08); // leve fundo vermelho
-          border: 1px solid rgba(214,58,58,0.14);
-          color: $accent;
-          box-shadow: 0 8px 22px rgba(214,58,58,0.06);
-
-          .sidebar__icon {
-            color: $accent;
-          }
-        }
-      }
-    }
-  }
-
-  // rodapé (logout)
-  &__bottom {
-    margin-top: 18px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(255,255,255,0.03);
-
-    .sidebar__logout {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 8px 12px;
+    img {
       width: 100%;
-      background: transparent;
-      border: 0;
-      color: $muted;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: transform .16s ease, color .16s ease;
-
-      &:hover {
-        transform: translateX(6px);
-        color: $accent;
-      }
+      height: auto;
+      object-fit: contain;
     }
   }
 
-  // comportamento responsivo: colapsa para ícones apenas
-  @media (max-width: 900px) {
-    width: $sidebar-collapsed-width;
+  // Portal de Gerenciamento
+  &__portal {
+    text-align: center;
+    margin-bottom: 8px; // ✅ menos espaço que antes
 
-    .sidebar__brand { display: none; }
-    .sidebar__nav ul li .sidebar__link {
-      justify-content: center;
-      padding: 10px 6px;
-      .sidebar__label { display: none; }
+    .portal__title {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #f0f0f0;
     }
-    .sidebar__bottom .sidebar__logout { justify-content: center; .sidebar__label { display: none; } }
+
+    .portal__highlight {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: $accent;
+    }
+  }
+
+  // Linha divisória
+  &__divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 8px 0 12px 0; // ✅ ajustado para não ficar muito afastado
+  }
+
+  // Navegação
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 }
 
-/* main-content helper — facilita adicionar margem ao conteúdo principal */
-.main-content {
-  margin-left: $sidebar-width;
-  transition: margin-left .18s ease;
-  @media (max-width: 900px) {
-    margin-left: $sidebar-collapsed-width;
+// Estilo dos itens de menu
+.nav__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: none;
+  outline: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: $muted;
+  transition: all 0.2s ease;
+
+  i {
+    font-size: 16px;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    transform: translateX(6px);
+  }
+
+  &.active {
+    background: rgba(220, 53, 69, 0.12);
+    color: $accent;
+    box-shadow: inset 0 0 6px rgba(220, 53, 69, 0.4);
+  }
+}
+
+// Parte inferior (logout)
+.sidebar__bottom {
+  margin-top: auto;
+  margin-bottom: 30px; // ✅ sobe o botão para não colar no fim
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 15px;
+
+  .logout__btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: none;
+    outline: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: $muted;
+    transition: all 0.2s ease;
+
+    i {
+      font-size: 16px;
+    }
+
+    &:hover {
+      background: rgba(220, 53, 69, 0.12);
+      color: $accent;
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 900px) {
+  .sidebar {
+    width: 70px;
+    padding: 15px 8px;
+    align-items: center;
+
+    &__logo {
+      width: 40px;
+      margin-bottom: 5px;
+    }
+
+    &__portal {
+      display: none; // esconde o portal no mobile
+    }
+
+    &__divider {
+      margin: 8px 0;
+    }
+
+    &__nav .nav__item {
+      justify-content: center;
+      span {
+        display: none;
+      }
+    }
+
+    .sidebar__bottom .logout__btn {
+      justify-content: center;
+      span {
+        display: none;
+      }
+    }
   }
 }
