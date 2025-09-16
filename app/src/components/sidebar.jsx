@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // 👈 importa
+import { useNavigate, useLocation } from "react-router-dom"; 
 import "./sidebar.scss";
 import logoJotaNunes from "../assets/logo-jotanunes.png";
 import {
@@ -14,29 +13,27 @@ import {
 } from "react-icons/lu";
 
 const MENU_ITEMS = [
-  { id: "dashboard", label: "Dashboard", icon: <LuLayoutDashboard /> },
-  { id: "novos", label: "Novos Registros", icon: <LuUserPlus /> },
-  { id: "alertas", label: "Alertas de Alterações", icon: <LuBell /> },
-  { id: "historico", label: "Histórico de Alterações", icon: <LuClock3 /> },
-  { id: "docs", label: "Documentação Técnica", icon: <LuFileText /> },
-  { id: "dependencias", label: "Dependências", icon: <LuBoxes /> },
-  { id: "settings", label: "Settings", icon: <LuSettings /> },
+  { id: "dashboard", label: "Dashboard", icon: <LuLayoutDashboard />, path: "/dashboard" },
+  { id: "novos", label: "Novos Registros", icon: <LuUserPlus />, path: "/novos-registros" },
+  { id: "alertas", label: "Alertas de Alterações", icon: <LuBell />, path: "/alertas" },
+  { id: "historico", label: "Histórico de Alterações", icon: <LuClock3 />, path: "/historico" },
+  { id: "docs", label: "Documentação Técnica", icon: <LuFileText />, path: "/documentacao" },
+  { id: "dependencias", label: "Dependências", icon: <LuBoxes />, path: "/dependencias" },
+  { id: "settings", label: "Settings", icon: <LuSettings />, path: "/settings" },
 ];
 
 export default function Sidebar({ onNavigate }) {
-  const [activeItem, setActiveItem] = useState("dashboard");
-  const navigate = useNavigate(); // 👈 hook do router
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleClick = (id) => {
-    setActiveItem(id);
-    if (onNavigate) onNavigate(id);
-    if (id === "dashboard") navigate("/dashboard"); // exemplo simples
+  const handleClick = (item) => {
+    if (onNavigate) onNavigate(item.path);
+    if (item.path) navigate(item.path);
   };
 
   const handleLogout = () => {
-    // se tiver token ou sessão, limpa aqui
     localStorage.removeItem("authToken");
-    navigate("/", { replace: true }); // 👈 redireciona pro login
+    navigate("/", { replace: true }); 
   };
 
   return (
@@ -59,8 +56,8 @@ export default function Sidebar({ onNavigate }) {
           <button
             key={item.id}
             type="button"
-            className={`nav__item ${activeItem === item.id ? "active" : ""}`}
-            onClick={() => handleClick(item.id)}
+            className={`nav__item ${location.pathname === item.path ? "active" : ""}`}
+            onClick={() => handleClick(item)}
           >
             <span className="nav__icon">{item.icon}</span>
             <span className="nav__label">{item.label}</span>
