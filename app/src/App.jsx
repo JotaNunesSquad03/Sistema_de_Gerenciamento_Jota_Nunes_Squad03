@@ -2,7 +2,7 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import Sidebar from "./components/sidebar"; // sua sidebar
+import Sidebar from "./components/Sidebar"; // sua sidebar
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function App() {
