@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom"; 
 import "./sidebar.scss";
-import logoJotaNunes from "../assets/logo-jotanunes.png";
+import logoJotaNunes from "../../assets/logo-jotanunes.png";
 import {
   LuLayoutDashboard,
   LuUserPlus,
@@ -22,13 +22,15 @@ const MENU_ITEMS = [
   { id: "settings", label: "Settings", icon: <LuSettings />, path: "/settings" },
 ];
 
-export default function Sidebar({ onNavigate }) {
+export default function Sidebar({ onNavigate, isOpen, onClose }) {
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleClick = (item) => {
     if (onNavigate) onNavigate(item.path);
     if (item.path) navigate(item.path);
+    // Fechar sidebar no mobile após clicar
+    if (onClose) onClose();
   };
 
   const handleLogout = () => {
@@ -37,7 +39,7 @@ export default function Sidebar({ onNavigate }) {
   };
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
       <div className="sidebar__top">
         <div className="sidebar__logo">
           <img src={logoJotaNunes} alt="Logo" />

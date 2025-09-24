@@ -1,14 +1,14 @@
 // src/App.jsx
 import { Routes, Route } from "react-router-dom";
-import Login from "./pages/Login/Login";
-import Dashboard from "./pages/Dashboard";
+import Login from "./components/pages/Login/Login";
+import Dashboard from "./components/pages/Dashboard/Dashboard";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import NovosRegistros from "./pages/NovosRegistros";
-import Alertas from "./pages/Alertas";
-import Historico from "./pages/Historico";
-import Dependencias from "./pages/Dependencias";
-import Documentacao from "./pages/Documentacao";
-import Settings from "./pages/Settings";
+import NovosRegistros from "./components/pages/NovosRegistros";
+import Alertas from "./components/pages/Alertas";
+import Historico from "./components/pages/Historico";
+import Dependencias from "./components/pages/Dependencias";
+import Documentacao from "./components/pages/Documentacao";
+import Settings from "./components/pages/Settings";
 import DashboardLayout from "./components/layout/DashboardLayout";
 
 export default function App() {

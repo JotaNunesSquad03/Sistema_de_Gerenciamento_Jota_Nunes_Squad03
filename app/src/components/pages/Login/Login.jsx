@@ -1,7 +1,7 @@
 import "./Login.scss";
-import logo from "../../assets/logo-jotanunes.png";
+import logo from "../../../assets/logo-jotanunes.png";
 import { BsEnvelope, BsKey, BsEye, BsEyeSlash } from "react-icons/bs";
-import { useLogin } from "../../hooks/useLogin";
+import { useLogin } from "../../../hooks/useLogin";
 
 function Login() {
   const {
@@ -77,7 +77,7 @@ function Login() {
           <button type="submit">Login</button>
 
           <p>
-            Don’t have an account? <a href="#">Register</a>
+            Don't have an account? <a href="#">Register</a>
           </p>
         </form>
       </div>

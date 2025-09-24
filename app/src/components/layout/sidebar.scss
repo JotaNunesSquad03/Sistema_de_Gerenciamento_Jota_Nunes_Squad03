@@ -1,4 +1,4 @@
-@import "../styles/variables.scss"; // importa variáveis globais (cores, espaçamentos etc.)
+@import "../../styles/variables.scss";
 
 .sidebar {
   position: fixed;
@@ -13,8 +13,10 @@
   justify-content: space-between;
   padding: 20px 15px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
 
-  // Topo: logo + portal + linha
   &__top {
     display: flex;
     flex-direction: column;
@@ -22,8 +24,8 @@
   }
 
   &__logo {
-    width: 180px;       // ✅ largura mais compacta
-    margin-bottom: 50px; // ✅ aproxima mais do portal
+    width: 180px;       
+    margin-bottom: 50px; 
     margin-top: 10px;
 
     img {
@@ -33,10 +35,9 @@
     }
   }
 
-  // Portal de Gerenciamento
   &__portal {
     text-align: center;
-    margin-bottom: 8px; // ✅ menos espaço que antes
+    margin-bottom: 8px; 
 
     .portal__title {
       display: block;
@@ -53,15 +54,13 @@
     }
   }
 
-  // Linha divisória
   &__divider {
     width: 100%;
     height: 1px;
     background: rgba(255, 255, 255, 0.1);
-    margin: 8px 0 12px 0; // ✅ ajustado para não ficar muito afastado
+    margin: 8px 0 12px 0;
   }
 
-  // Navegação
   &__nav {
     display: flex;
     flex-direction: column;
@@ -69,7 +68,6 @@
   }
 }
 
-// Estilo dos itens de menu
 .nav__item {
   display: flex;
   align-items: center;
@@ -102,10 +100,9 @@
   }
 }
 
-// Parte inferior (logout)
 .sidebar__bottom {
   margin-top: auto;
-  margin-bottom: 30px; // ✅ sobe o botão para não colar no fim
+  margin-bottom: 30px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 15px;
 
@@ -135,38 +132,101 @@
   }
 }
 
+// Classe para controlar visibilidade da sidebar
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
 // Responsividade
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+    
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}
+
+// Desktop - sidebar sempre visível
+@media (min-width: 1025px) {
+  .sidebar {
+    transform: translateX(0) !important;
+    position: fixed;
+    display: flex !important;
+  }
+}
+
 @media (max-width: 900px) {
   .sidebar {
-    width: 70px;
-    padding: 15px 8px;
-    align-items: center;
+    width: 250px; // Largura completa para mostrar os itens
+    padding: 20px 15px;
+    transform: translateX(-100%);
+
+    &.open {
+      transform: translateX(0);
+    }
 
     &__logo {
-      width: 40px;
-      margin-bottom: 5px;
+      width: 180px;
+      margin-bottom: 20px;
     }
 
     &__portal {
-      display: none; // esconde o portal no mobile
+      display: block; // Mostrar o portal
     }
 
     &__divider {
-      margin: 8px 0;
+      margin: 8px 0 12px 0;
     }
 
     &__nav .nav__item {
-      justify-content: center;
-      span {
-        display: none;
+      justify-content: flex-start; // Alinhar à esquerda
+      padding: 10px 12px;
+      
+      .nav__icon {
+        margin-right: 10px;
+      }
+      
+      .nav__label {
+        display: block; // Mostrar os labels
       }
     }
 
     .sidebar__bottom .logout__btn {
-      justify-content: center;
-      span {
-        display: none;
+      justify-content: flex-start;
+      padding: 10px 12px;
+      
+      .nav__icon {
+        margin-right: 10px;
       }
+      
+      .nav__label {
+        display: block; // Mostrar o label
+      }
+    }
+  }
+}
+
+// Mobile muito pequeno - versão compacta
+@media (max-width: 480px) {
+  .sidebar {
+    width: 200px;
+    padding: 15px 10px;
+
+    &__logo {
+      width: 120px;
+      margin-bottom: 15px;
+    }
+
+    &__nav .nav__item {
+      padding: 8px 10px;
+      font-size: 0.9rem;
+    }
+
+    .sidebar__bottom .logout__btn {
+      padding: 8px 10px;
+      font-size: 0.9rem;
     }
   }
 }
