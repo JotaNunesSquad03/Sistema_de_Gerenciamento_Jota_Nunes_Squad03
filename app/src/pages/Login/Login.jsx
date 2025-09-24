@@ -1,22 +1,19 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../services/api";
 import "./Login.scss";
-import logo from "../assets/logo-jotanunes.png";
+import logo from "../../assets/logo-jotanunes.png";
 import { BsEnvelope, BsKey, BsEye, BsEyeSlash } from "react-icons/bs";
+import { useLogin } from "../../hooks/useLogin";
 
 function Login() {
-  const navigate = useNavigate();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/dashboard");
-  };
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    showPassword,
+    error,
+    handleSubmit,
+    togglePasswordVisibility,
+  } = useLogin();
 
   return (
     <div className="login-page">
@@ -63,7 +60,7 @@ function Login() {
             <button
               type="button"
               className="toggle-password"
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={togglePasswordVisibility}
               aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
             >
               <i>{showPassword ? <BsEyeSlash /> : <BsEye />}</i>
