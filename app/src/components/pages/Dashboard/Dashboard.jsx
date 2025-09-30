@@ -72,20 +72,20 @@ export default function Dashboard() {
       </div>
 
       <div className="registros-section">
-        <div className="registros-header">
-          <h2>Visão Geral novos registros criados</h2>
-          <div className="search-bar">
-            <div className="search-input">
-              <Search className="search-icon" />
-              <input 
-                type="text" 
-                placeholder="Search" 
-                className="search-field"
-              />
+        <div className="table-container">
+          <div className="table-header">
+            <h2>Visão Geral novos registros criados</h2>
+            <div className="search-bar">
+              <div className="search-input">
+                <Search className="search-icon" />
+                <input 
+                  type="text" 
+                  placeholder="Search" 
+                  className="search-field"
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="table-container">
           <table className="registros-table">
             <thead>
               <tr>
