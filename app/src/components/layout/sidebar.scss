@@ -71,8 +71,8 @@
 .nav__item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
+  gap: 12px;
+  padding: 12px 15px;
   border: none;
   outline: none;
   background: transparent;
@@ -82,9 +82,27 @@
   font-weight: 600;
   color: $muted;
   transition: all 0.2s ease;
+  width: 100%;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-  i {
+  .nav__icon {
+    flex-shrink: 0;
     font-size: 16px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav__label {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &:hover {
@@ -109,8 +127,8 @@
   .logout__btn {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
+    gap: 12px;
+    padding: 12px 15px;
     border: none;
     outline: none;
     background: transparent;
@@ -120,9 +138,21 @@
     font-weight: 600;
     color: $muted;
     transition: all 0.2s ease;
+    width: 100%;
+    text-align: left;
 
-    i {
+    .nav__icon {
+      flex-shrink: 0;
       font-size: 16px;
+      width: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav__label {
+      flex: 1;
+      min-width: 0;
     }
 
     &:hover {
@@ -159,7 +189,7 @@
 
 @media (max-width: 900px) {
   .sidebar {
-    width: 250px; // Largura completa para mostrar os itens
+    width: 280px; // Largura completa para mostrar os itens
     padding: 20px 15px;
     transform: translateX(-100%);
 
@@ -182,10 +212,10 @@
 
     &__nav .nav__item {
       justify-content: flex-start; // Alinhar à esquerda
-      padding: 10px 12px;
+      padding: 12px 15px;
       
       .nav__icon {
-        margin-right: 10px;
+        margin-right: 12px;
       }
       
       .nav__label {
@@ -195,10 +225,10 @@
 
     .sidebar__bottom .logout__btn {
       justify-content: flex-start;
-      padding: 10px 12px;
+      padding: 12px 15px;
       
       .nav__icon {
-        margin-right: 10px;
+        margin-right: 12px;
       }
       
       .nav__label {
@@ -211,7 +241,7 @@
 // Mobile muito pequeno - versão compacta
 @media (max-width: 480px) {
   .sidebar {
-    width: 200px;
+    width: 240px;
     padding: 15px 10px;
 
     &__logo {
@@ -220,12 +250,17 @@
     }
 
     &__nav .nav__item {
-      padding: 8px 10px;
+      padding: 10px 12px;
       font-size: 0.9rem;
+      
+      .nav__label {
+        white-space: normal;
+        line-height: 1.3;
+      }
     }
 
     .sidebar__bottom .logout__btn {
-      padding: 8px 10px;
+      padding: 10px 12px;
       font-size: 0.9rem;
     }
   }
