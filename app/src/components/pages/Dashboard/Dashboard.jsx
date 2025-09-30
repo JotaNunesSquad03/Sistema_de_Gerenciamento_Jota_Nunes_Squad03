@@ -16,17 +16,6 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-page">
-      <div className="search-bar">
-        <div className="search-input">
-          <Search className="search-icon" />
-          <input 
-            type="text" 
-            placeholder="Search" 
-            className="search-field"
-          />
-        </div>
-      </div>
-
       <div className="overview-section">
         <h2>Visão Geral das Transações</h2>
         <div className="metrics-grid">
@@ -83,7 +72,19 @@ export default function Dashboard() {
       </div>
 
       <div className="registros-section">
-        <h2>Visão Geral novos registros criados</h2>
+        <div className="registros-header">
+          <h2>Visão Geral novos registros criados</h2>
+          <div className="search-bar">
+            <div className="search-input">
+              <Search className="search-icon" />
+              <input 
+                type="text" 
+                placeholder="Search" 
+                className="search-field"
+              />
+            </div>
+          </div>
+        </div>
         <div className="table-container">
           <table className="registros-table">
             <thead>
