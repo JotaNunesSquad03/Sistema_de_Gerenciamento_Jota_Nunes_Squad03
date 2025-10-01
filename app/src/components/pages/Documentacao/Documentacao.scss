@@ -1,4 +1,3 @@
-// Variáveis de estilo (podem ser movidas para um arquivo global)
 $sidebar-bg: #22252a;
 $text-color-light: #f1f1f1;
 $text-color-dark: #333;
@@ -8,7 +7,6 @@ $card-bg: #fff;
 $shadow: rgba(0, 0, 0, 0.05);
 $page-bg: #f4f7fa;
 
-// Classe principal da página
 .documentacao-page {
     display: flex;
     font-family: 'Arial', sans-serif;
