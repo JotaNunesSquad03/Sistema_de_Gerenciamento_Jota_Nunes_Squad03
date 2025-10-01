@@ -1,4 +1,5 @@
 import "./Dashboard.scss";
+import { useState } from "react";
 import { 
   Search,
   BarChart3,
@@ -7,6 +8,7 @@ import {
   AlertTriangle,
   Users,
   Lock,
+  Filter,
   Star,
   Edit,
   Trash2
@@ -14,10 +16,29 @@ import {
 
 export default function Dashboard() {
 
+  const [showFilter, setShowFilter] = useState(false);
+
   return (
     <div className="dashboard-page">
       <div className="overview-section">
         <h2>Visão Geral das Transações</h2>
+        <button className="filter_button" onClick={()=>setShowFilter(!showFilter)}>
+          <Filter className="filter-icon" />Filtros Avançados
+        </button>
+        {showFilter && (
+          <div className="filter_container">
+            <div className="filter_group">
+              <div className="input">
+                <label>Data de Início</label>
+                <input type='date'></input>
+              </div>
+              <div className="input">
+                <label>Data de Fim</label>
+                <input type='date'></input>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="metrics-grid">
           <div className="metric-card">
             <div className="metric-icon">

@@ -559,3 +559,60 @@
     }
   }
 }
+
+// Filter styles
+.filter_button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #d4d4d4;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+  margin-bottom: 15px;
+
+  &:hover {
+    background: #bfbfbf;
+  }
+}
+
+.filter_container {
+  background: #f8f8f8;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.filter_group {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-weight: 500;
+  }
+
+  input[type="date"] {
+    padding: 0.6rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    color: #333;
+    cursor: pointer;
+
+    &:hover {
+      border-color: #888;
+    }
+  }
+}
