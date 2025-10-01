@@ -21,7 +21,7 @@ export default function Dashboard() {
   return (
     <div className="dashboard-page">
       <div className="overview-section">
-        <h2>Visão Geral das Transações</h2>
+        <h2>Visão Geral das métricas</h2>
         <button className="filter_button" onClick={()=>setShowFilter(!showFilter)}>
           <Filter className="filter-icon" />Filtros Avançados
         </button>
