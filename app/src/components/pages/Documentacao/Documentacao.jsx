@@ -1,7 +1,6 @@
 import React from 'react';
-import './Documentacao.scss'; // Nome do import ajustado
+import './Documentacao.scss'; 
 
-// Componente reutilizável para os cards de navegação
 const DocCard = ({ icon, title, active = false }) => (
     <div className={`doc-card ${active ? 'active' : ''}`}>
         <i className={`fas ${icon}`}></i>
@@ -9,11 +8,10 @@ const DocCard = ({ icon, title, active = false }) => (
     </div>
 );
 
-// Nome do componente ajustado para "Documentacao"
 const Documentacao = () => {
     return (
         <div className="documentacao-page">
-            {/* A sidebar pode ser transformada em um componente separado no futuro */}
+            {}
             <aside className="sidebar">
                 <div className="logo-section">
                     <img src="/logo-jotanunes.png" alt="Jotanunes Construtora" className="logo" />
