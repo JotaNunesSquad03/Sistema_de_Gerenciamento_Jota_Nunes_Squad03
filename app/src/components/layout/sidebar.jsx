@@ -1,78 +1,62 @@
-import { useNavigate, useLocation } from "react-router-dom"; 
-import "./sidebar.scss";
-import logoJotaNunes from "../../assets/logo-jotanunes.png";
-import {
-  LuLayoutDashboard,
-  LuUserPlus,
-  LuBell,
-  LuClock3,
-  LuFileText,
-  LuBoxes,
-  LuSettings,
-  LuLogOut,
-} from "react-icons/lu";
+import { NavLink, useNavigate } from 'react-router-dom';
+import { LogOut } from 'lucide-react';
+import Logo from '../../assets/logo-jotanunes.png';
+import './sidebar.scss'; 
 
-const MENU_ITEMS = [
-  { id: "dashboard", label: "Dashboard", icon: <LuLayoutDashboard />, path: "/dashboard" },
-  { id: "novos", label: "Novos Registros", icon: <LuUserPlus />, path: "/novos-registros" },
-  { id: "alertas", label: "Alertas de Alterações", icon: <LuBell />, path: "/alertas" },
-  { id: "historico", label: "Histórico de Alterações", icon: <LuClock3 />, path: "/historico" },
-  { id: "docs", label: "Documentação Técnica", icon: <LuFileText />, path: "/documentacao" },
-  { id: "dependencias", label: "Dependências", icon: <LuBoxes />, path: "/dependencias" },
-  { id: "settings", label: "Settings", icon: <LuSettings />, path: "/settings" },
+// Importe seus ícones aqui
+import { Grid, FilePlus, Bell, Clock, FileText, Settings, Share2 } from 'lucide-react';
+
+const navItems = [
+  { path: "/dashboard", icon: <Grid />, label: "Dashboard" },
+  { path: "/novos-registros", icon: <FilePlus />, label: "Novos Registros" },
+  { path: "/alertas", icon: <Bell />, label: "Alertas de Alterações" },
+  { path: "/historico", icon: <Clock />, label: "Histórico de Alterações" },
+  { path: "/documentacao", icon: <FileText />, label: "Documentação Técnica" },
+  { path: "/dependencias", icon: <Share2 />, label: "Dependências" },
+  { path: "/settings", icon: <Settings />, label: "Settings" },
 ];
 
-export default function Sidebar({ onNavigate, isOpen, onClose }) {
+const Sidebar = ({ className }) => {
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const handleClick = (item) => {
-    if (onNavigate) onNavigate(item.path);
-    if (item.path) navigate(item.path);
-    // Fechar sidebar no mobile após clicar
-    if (onClose) onClose();
-  };
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    navigate("/", { replace: true }); 
+    navigate('/');
   };
 
   return (
-    <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
+    <aside className={`sidebar ${className}`}>
       <div className="sidebar__top">
         <div className="sidebar__logo">
-          <img src={logoJotaNunes} alt="Logo" />
+          <img src={Logo} alt="Logo Jota Nunes" />
         </div>
-
         <div className="sidebar__portal">
           <span className="portal__title">Portal de</span>
           <span className="portal__highlight">Gerenciamento</span>
         </div>
-
         <div className="sidebar__divider"></div>
       </div>
 
       <nav className="sidebar__nav">
-        {MENU_ITEMS.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            className={`nav__item ${location.pathname === item.path ? "active" : ""}`}
-            onClick={() => handleClick(item)}
+        {navItems.map((item) => (
+          <NavLink 
+            to={item.path} 
+            key={item.path}
+            className={({ isActive }) => `nav__item ${isActive ? 'active' : ''}`}
           >
             <span className="nav__icon">{item.icon}</span>
             <span className="nav__label">{item.label}</span>
-          </button>
+          </NavLink>
         ))}
       </nav>
 
       <div className="sidebar__bottom">
         <button type="button" className="logout__btn" onClick={handleLogout}>
-          <LuLogOut className="nav__icon" />
+          <span className="nav__icon"><LogOut /></span>
           <span className="nav__label">Signout</span>
         </button>
       </div>
     </aside>
   );
-}
+};
+
+export default Sidebar;

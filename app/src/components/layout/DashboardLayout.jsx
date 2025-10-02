@@ -5,55 +5,50 @@ import { Menu, X } from "lucide-react";
 import "./DashboardLayout.scss";
 
 export default function DashboardLayout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 1024);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 
   useEffect(() => {
-    const checkScreenSize = () => {
-      const isMobileSize = window.innerWidth <= 1024;
-      setIsMobile(isMobileSize);
-      
-      // Em desktop, sidebar sempre aberta
-      if (window.innerWidth > 1024) {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 1024;
+      setIsMobile(mobile);
+      if (!mobile) {
         setSidebarOpen(true);
       } else {
-        // Em mobile, sidebar fechada por padrão
         setSidebarOpen(false);
       }
     };
-
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    
-    return () => window.removeEventListener('resize', checkScreenSize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
+    if (isMobile) {
+      setSidebarOpen(!sidebarOpen);
+    }
   };
 
   return (
     <div className="dashboard-layout">
-      {/* Botão Hambúrguer - só aparece em mobile */}
       {isMobile && (
         <button 
           className="hamburger-btn"
           onClick={toggleSidebar}
           aria-label="Toggle sidebar"
         >
-          {sidebarOpen ? <X /> : <Menu />}
+          {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       )}
 
-      {/* Overlay para mobile */}
       {isMobile && sidebarOpen && (
         <div 
-          className="sidebar-overlay"
+          className="sidebar-overlay is-active"
           onClick={toggleSidebar}
         />
       )}
 
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <Sidebar className={sidebarOpen ? 'is-open' : ''} />
+      
       <main className="main-content">
         <Outlet /> 
       </main>

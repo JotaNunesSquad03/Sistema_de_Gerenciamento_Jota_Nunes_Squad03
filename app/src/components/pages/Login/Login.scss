@@ -1,4 +1,5 @@
-@import "../../../styles/variables.scss";
+@use "../../../styles/variables.scss" as *;
+@use "sass:color";
 
 .login-page {
   display: flex;
@@ -54,14 +55,14 @@
         width: 90%;
         padding: 2rem 1.5rem;
       }
-
+      
       h2 {
         font-size: 2rem;
         color: #000;
         margin-bottom: -0.2rem;
         font-weight: 400;
       }
-
+      
       h1 {
         font-size: 2.5rem;
         font-weight: 700;
@@ -80,7 +81,7 @@
         margin-bottom: 1.5rem;
         background: #e8e8e8;
         transition: background-color 0.3s;
-
+        
         &:focus-within {
           background: #d8d8d8;
         }
@@ -97,7 +98,7 @@
           display: flex;
           flex-direction: column;
           flex: 1;
-
+          
           label {
             font-size: 0.9rem;
             font-weight: 500;
@@ -121,29 +122,29 @@
             }
           }
         }
-
+        
         .toggle-password {
-          position: absolute;
-          right: 1rem;
-          top: 50%;
-          transform: translateY(-50%);
-          background: none;
-          border: none;
-          cursor: pointer;
-          color: #000;
-          transition: color 0.3s;
-          line-height: 1;
-          z-index: 1;
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #000;
+            transition: color 0.3s;
+            line-height: 1;
+            z-index: 1;
 
-          &:hover {
-            color: #333;
-          }
+            &:hover {
+                color: #333;
+            }
 
-          svg {
-            width: 20px;
-            height: 20px;
-            pointer-events: none;
-          }
+            svg {
+                width: 20px;
+                height: 20px;
+                pointer-events: none;
+            }
         }
       }
 
@@ -153,7 +154,7 @@
         align-items: center;
         font-size: 0.85rem;
         margin-bottom: 1rem;
-
+        
         label {
           display: flex;
           align-items: center;
@@ -166,7 +167,6 @@
           color: $primary-color;
           font-weight: 500;
           text-decoration: none;
-
           &:hover {
             text-decoration: underline;
           }
@@ -187,7 +187,7 @@
         margin-top: 1rem;
 
         &:hover {
-          background-color: darken($primary-color, 8%);
+          background-color: color.adjust($primary-color, $lightness: -8%);
         }
       }
 

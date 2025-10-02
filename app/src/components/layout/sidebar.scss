@@ -1,13 +1,13 @@
-@import "../../styles/variables.scss";
+@use "../../styles/variables.scss" as *;
 
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
-  width: $sidebar-width;
-  background: $sidebar-bg;
-  color: $text-light;
+  width: 280px;
+  background: $secondary-color;
+  color: #f5f5f5;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -15,57 +15,54 @@
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.4);
   z-index: 1000;
   transform: translateX(0);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease-in-out;
+}
 
-  &__top {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+.sidebar__top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  &__logo {
-    width: 180px;       
-    margin-bottom: 50px; 
-    margin-top: 10px;
-
-    img {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-    }
-  }
-
-  &__portal {
-    text-align: center;
-    margin-bottom: 8px; 
-
-    .portal__title {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: #f0f0f0;
-    }
-
-    .portal__highlight {
-      display: block;
-      font-size: 14px;
-      font-weight: 700;
-      color: $accent;
-    }
-  }
-
-  &__divider {
+.sidebar__logo {
+  width: 180px;
+  margin-bottom: 50px;
+  margin-top: 10px;
+  img {
     width: 100%;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.1);
-    margin: 8px 0 12px 0;
+    height: auto;
+    object-fit: contain;
   }
+}
 
-  &__nav {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+.sidebar__portal {
+  text-align: center;
+  margin-bottom: 8px;
+  .portal__title {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #f0f0f0;
   }
+  .portal__highlight {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: $primary-color;
+  }
+}
+
+.sidebar__divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 8px 0 12px 0;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .nav__item {
@@ -80,13 +77,11 @@
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
-  color: $muted;
+  color: #b5b5b5;
+  text-decoration: none;
   transition: all 0.2s ease;
   width: 100%;
   text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
   .nav__icon {
     flex-shrink: 0;
@@ -96,13 +91,8 @@
     align-items: center;
     justify-content: center;
   }
-
   .nav__label {
     flex: 1;
-    min-width: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   &:hover {
@@ -110,11 +100,9 @@
     color: #fff;
     transform: translateX(6px);
   }
-
   &.active {
     background: rgba(220, 53, 69, 0.12);
-    color: $accent;
-    box-shadow: inset 0 0 6px rgba(220, 53, 69, 0.4);
+    color: $primary-color;
   }
 }
 
@@ -123,145 +111,23 @@
   margin-bottom: 30px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 15px;
-
   .logout__btn {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 15px;
-    border: none;
-    outline: none;
-    background: transparent;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    color: $muted;
-    transition: all 0.2s ease;
-    width: 100%;
-    text-align: left;
-
-    .nav__icon {
-      flex-shrink: 0;
-      font-size: 16px;
-      width: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .nav__label {
-      flex: 1;
-      min-width: 0;
-    }
-
+    // Reutilizando estilos do nav__item
+    @extend .nav__item; 
     &:hover {
       background: rgba(220, 53, 69, 0.12);
-      color: $accent;
+      color: $primary-color;
+      transform: none; // Sem deslocamento para o botão de logout
     }
   }
 }
 
-// Classe para controlar visibilidade da sidebar
-.sidebar.closed {
-  transform: translateX(-100%);
-}
-
-// Responsividade
+// Comportamento responsivo
 @media (max-width: 1024px) {
   .sidebar {
-    transform: translateX(-100%);
-    
-    &.open {
-      transform: translateX(0);
-    }
-  }
-}
-
-// Desktop - sidebar sempre visível
-@media (min-width: 1025px) {
-  .sidebar {
-    transform: translateX(0) !important;
-    position: fixed;
-    display: flex !important;
-  }
-}
-
-@media (max-width: 900px) {
-  .sidebar {
-    width: 280px; // Largura completa para mostrar os itens
-    padding: 20px 15px;
-    transform: translateX(-100%);
-
-    &.open {
-      transform: translateX(0);
-    }
-
-    &__logo {
-      width: 180px;
-      margin-bottom: 20px;
-    }
-
-    &__portal {
-      display: block; // Mostrar o portal
-    }
-
-    &__divider {
-      margin: 8px 0 12px 0;
-    }
-
-    &__nav .nav__item {
-      justify-content: flex-start; // Alinhar à esquerda
-      padding: 12px 15px;
-      
-      .nav__icon {
-        margin-right: 12px;
-      }
-      
-      .nav__label {
-        display: block; // Mostrar os labels
-      }
-    }
-
-    .sidebar__bottom .logout__btn {
-      justify-content: flex-start;
-      padding: 12px 15px;
-      
-      .nav__icon {
-        margin-right: 12px;
-      }
-      
-      .nav__label {
-        display: block; // Mostrar o label
-      }
-    }
-  }
-}
-
-// Mobile muito pequeno - versão compacta
-@media (max-width: 480px) {
-  .sidebar {
-    width: 240px;
-    padding: 15px 10px;
-
-    &__logo {
-      width: 120px;
-      margin-bottom: 15px;
-    }
-
-    &__nav .nav__item {
-      padding: 10px 12px;
-      font-size: 0.9rem;
-      
-      .nav__label {
-        white-space: normal;
-        line-height: 1.3;
-      }
-    }
-
-    .sidebar__bottom .logout__btn {
-      padding: 10px 12px;
-      font-size: 0.9rem;
+    transform: translateX(-100%); // Escondido por padrão
+    &.is-open {
+      transform: translateX(0); // Aparece quando tem a classe 'is-open'
     }
   }
 }
