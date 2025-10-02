@@ -14,10 +14,7 @@ import {
 
 const MENU_ITEMS = [
   { id: "dashboard", label: "Dashboard", icon: <LuLayoutDashboard />, path: "/dashboard" },
-  { id: "novos", label: "Novos Registros", icon: <LuUserPlus />, path: "/novos-registros" },
-  { id: "alertas", label: "Alertas de Alterações", icon: <LuBell />, path: "/alertas" },
   { id: "historico", label: "Histórico de Alterações", icon: <LuClock3 />, path: "/historico" },
-  { id: "docs", label: "Documentação Técnica", icon: <LuFileText />, path: "/documentacao" },
   { id: "dependencias", label: "Dependências", icon: <LuBoxes />, path: "/dependencias" },
   { id: "settings", label: "Settings", icon: <LuSettings />, path: "/settings" },
 ];
@@ -29,7 +26,6 @@ export default function Sidebar({ onNavigate, isOpen, onClose }) {
   const handleClick = (item) => {
     if (onNavigate) onNavigate(item.path);
     if (item.path) navigate(item.path);
-    // Fechar sidebar no mobile após clicar
     if (onClose) onClose();
   };
 
