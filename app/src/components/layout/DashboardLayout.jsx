@@ -13,11 +13,9 @@ export default function DashboardLayout() {
       const isMobileSize = window.innerWidth <= 1024;
       setIsMobile(isMobileSize);
       
-      // Em desktop, sidebar sempre aberta
       if (window.innerWidth > 1024) {
         setSidebarOpen(true);
       } else {
-        // Em mobile, sidebar fechada por padrão
         setSidebarOpen(false);
       }
     };
