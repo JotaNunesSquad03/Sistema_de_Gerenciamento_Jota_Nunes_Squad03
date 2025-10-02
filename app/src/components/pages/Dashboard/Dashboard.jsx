@@ -8,6 +8,7 @@ import {
   Filter,
   Edit,
   Eye,
+  Bell,
   Trash2,
   BookOpen,
   X,
@@ -70,11 +71,11 @@ export default function Dashboard() {
 
           <div className="metric-card">
             <div className="metric-icon">
-              <Eye />
+              <Bell />
             </div>
             <div className="metric-content">
               <div className="metric-value">12</div>
-              <p>Alterações recentes feitas nos últimos 7 dias</p>
+              <p>Alterações recentes</p>
             </div>
           </div>
 
