@@ -1,41 +1,19 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LogOut } from 'lucide-react';
+// CORREÇÃO 1: Removido o prefixo "Lu" dos nomes dos ícones na importação
+import { LogOut, LayoutDashboard, Clock3, Boxes, Settings } from 'lucide-react';
 import Logo from '../../assets/logo-jotanunes.png';
 import './sidebar.scss'; 
 
-<<<<<<< HEAD
-// Importe seus ícones aqui
-import { Grid, FilePlus, Bell, Clock, FileText, Settings, Share2 } from 'lucide-react';
-
-const navItems = [
-  { path: "/dashboard", icon: <Grid />, label: "Dashboard" },
-  { path: "/novos-registros", icon: <FilePlus />, label: "Novos Registros" },
-  { path: "/alertas", icon: <Bell />, label: "Alertas de Alterações" },
-  { path: "/historico", icon: <Clock />, label: "Histórico de Alterações" },
-  { path: "/documentacao", icon: <FileText />, label: "Documentação Técnica" },
-  { path: "/dependencias", icon: <Share2 />, label: "Dependências" },
-  { path: "/settings", icon: <Settings />, label: "Settings" },
-=======
 const MENU_ITEMS = [
-  { id: "dashboard", label: "Dashboard", icon: <LuLayoutDashboard />, path: "/dashboard" },
-  { id: "historico", label: "Histórico de Alterações", icon: <LuClock3 />, path: "/historico" },
-  { id: "dependencias", label: "Dependências", icon: <LuBoxes />, path: "/dependencias" },
-  { id: "settings", label: "Settings", icon: <LuSettings />, path: "/settings" },
->>>>>>> main
+  // CORREÇÃO 2: Removido o prefixo "Lu" do uso dos ícones
+  { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard />, path: "/dashboard" },
+  { id: "historico", label: "Histórico de Alterações", icon: <Clock3 />, path: "/historico" },
+  { id: "dependencias", label: "Dependências", icon: <Boxes />, path: "/dependencias" },
+  { id: "settings", label: "Settings", icon: <Settings />, path: "/settings" },
 ];
 
 const Sidebar = ({ className }) => {
   const navigate = useNavigate();
-<<<<<<< HEAD
-=======
-  const location = useLocation();
-
-  const handleClick = (item) => {
-    if (onNavigate) onNavigate(item.path);
-    if (item.path) navigate(item.path);
-    if (onClose) onClose();
-  };
->>>>>>> main
 
   const handleLogout = () => {
     navigate('/');
@@ -55,10 +33,10 @@ const Sidebar = ({ className }) => {
       </div>
 
       <nav className="sidebar__nav">
-        {navItems.map((item) => (
+        {MENU_ITEMS.map((item) => (
           <NavLink 
             to={item.path} 
-            key={item.path}
+            key={item.id}
             className={({ isActive }) => `nav__item ${isActive ? 'active' : ''}`}
           >
             <span className="nav__icon">{item.icon}</span>

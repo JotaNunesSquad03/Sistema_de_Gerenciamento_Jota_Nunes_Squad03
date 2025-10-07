@@ -18,7 +18,7 @@ export default function App() {
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/historico" element={<Historico />} />
-        <Route path="/dependencias" element={<Dependencias />} />
+        <Route path="/dependencias" element={<DependenciasPage />} />
         <Route path="/settings" element={<Settings />} />
       </Route>
     </Routes>

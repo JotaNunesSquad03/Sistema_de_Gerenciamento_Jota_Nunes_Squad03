@@ -9,35 +9,32 @@ export default function DashboardLayout() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 
   useEffect(() => {
-<<<<<<< HEAD
-    const handleResize = () => {
-      const mobile = window.innerWidth <= 1024;
-      setIsMobile(mobile);
-      if (!mobile) {
-=======
     const checkScreenSize = () => {
       const isMobileSize = window.innerWidth <= 1024;
       setIsMobile(isMobileSize);
       
       if (window.innerWidth > 1024) {
->>>>>>> main
         setSidebarOpen(true);
       } else {
         setSidebarOpen(false);
       }
     };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
   const toggleSidebar = () => {
+    // Apenas permite fechar/abrir no modo mobile
     if (isMobile) {
       setSidebarOpen(!sidebarOpen);
     }
   };
 
   return (
-    <div className="dashboard-layout">
+    <div className={`dashboard-layout ${sidebarOpen && isMobile ? 'sidebar-open' : ''}`}>
       {isMobile && (
         <button 
           className="hamburger-btn"
