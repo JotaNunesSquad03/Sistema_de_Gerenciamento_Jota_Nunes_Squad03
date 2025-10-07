@@ -17,11 +17,8 @@ export default function App() {
       {/* Rotas que usam o layout com a barra lateral */}
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/novos-registros" element={<NovosRegistros />} />
-        <Route path="/alertas" element={<Alertas />} />
         <Route path="/historico" element={<Historico />} />
-        <Route path="/documentacao" element={<Documentacao />} />
-        <Route path="/dependencias" element={<DependenciasPage />} />
+        <Route path="/dependencias" element={<Dependencias />} />
         <Route path="/settings" element={<Settings />} />
       </Route>
     </Routes>

@@ -3,6 +3,7 @@ import { LogOut } from 'lucide-react';
 import Logo from '../../assets/logo-jotanunes.png';
 import './sidebar.scss'; 
 
+<<<<<<< HEAD
 // Importe seus ícones aqui
 import { Grid, FilePlus, Bell, Clock, FileText, Settings, Share2 } from 'lucide-react';
 
@@ -14,10 +15,27 @@ const navItems = [
   { path: "/documentacao", icon: <FileText />, label: "Documentação Técnica" },
   { path: "/dependencias", icon: <Share2 />, label: "Dependências" },
   { path: "/settings", icon: <Settings />, label: "Settings" },
+=======
+const MENU_ITEMS = [
+  { id: "dashboard", label: "Dashboard", icon: <LuLayoutDashboard />, path: "/dashboard" },
+  { id: "historico", label: "Histórico de Alterações", icon: <LuClock3 />, path: "/historico" },
+  { id: "dependencias", label: "Dependências", icon: <LuBoxes />, path: "/dependencias" },
+  { id: "settings", label: "Settings", icon: <LuSettings />, path: "/settings" },
+>>>>>>> main
 ];
 
 const Sidebar = ({ className }) => {
   const navigate = useNavigate();
+<<<<<<< HEAD
+=======
+  const location = useLocation();
+
+  const handleClick = (item) => {
+    if (onNavigate) onNavigate(item.path);
+    if (item.path) navigate(item.path);
+    if (onClose) onClose();
+  };
+>>>>>>> main
 
   const handleLogout = () => {
     navigate('/');

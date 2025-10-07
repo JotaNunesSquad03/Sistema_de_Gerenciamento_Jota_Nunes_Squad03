@@ -9,10 +9,18 @@ export default function DashboardLayout() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 
   useEffect(() => {
+<<<<<<< HEAD
     const handleResize = () => {
       const mobile = window.innerWidth <= 1024;
       setIsMobile(mobile);
       if (!mobile) {
+=======
+    const checkScreenSize = () => {
+      const isMobileSize = window.innerWidth <= 1024;
+      setIsMobile(isMobileSize);
+      
+      if (window.innerWidth > 1024) {
+>>>>>>> main
         setSidebarOpen(true);
       } else {
         setSidebarOpen(false);
