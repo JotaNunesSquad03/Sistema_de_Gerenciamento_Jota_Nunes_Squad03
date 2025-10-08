@@ -9,7 +9,7 @@ const MENU_ITEMS = [
   { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard />, path: "/dashboard" },
   { id: "historico", label: "Histórico de Alterações", icon: <Clock3 />, path: "/historico" },
   { id: "dependencias", label: "Dependências", icon: <Boxes />, path: "/dependencias" },
-  { id: "settings", label: "Settings", icon: <Settings />, path: "/settings" },
+  { id: "configurações", label: "Configurações", icon: <Settings />, path: "/configurações" },
 ];
 
 const Sidebar = ({ className }) => {
@@ -48,7 +48,7 @@ const Sidebar = ({ className }) => {
       <div className="sidebar__bottom">
         <button type="button" className="logout__btn" onClick={handleLogout}>
           <span className="nav__icon"><LogOut /></span>
-          <span className="nav__label">Signout</span>
+          <span className="nav__label">Sair</span>
         </button>
       </div>
     </aside>

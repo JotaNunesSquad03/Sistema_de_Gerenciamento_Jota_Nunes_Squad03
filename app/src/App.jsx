@@ -16,7 +16,7 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/historico" element={<Historico />} />
         <Route path="/dependencias" element={<DependenciasPage />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/configurações" element={<Settings />} />
       </Route>
     </Routes>
   );

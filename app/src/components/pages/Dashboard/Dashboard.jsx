@@ -120,7 +120,7 @@ export default function Dashboard() {
                 <Search className="search-icon" />
                 <input 
                   type="text" 
-                  placeholder="Search" 
+                  placeholder="Filtrar" 
                   className="search-field"
                 />
               </div>

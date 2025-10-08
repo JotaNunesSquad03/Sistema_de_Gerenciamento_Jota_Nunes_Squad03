@@ -66,7 +66,7 @@ export default function Historico() {
               <Search className="search-icon" />
               <input 
                 type="text" 
-                placeholder="Search" 
+                placeholder="Filtrar" 
                 className="search-field"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}

@@ -48,7 +48,7 @@ function Login() {
               <BsKey />
             </span>
             <div className="input-content">
-              <label>Password</label>
+              <label>Senha</label>
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
@@ -69,15 +69,15 @@ function Login() {
 
           <div className="form-footer">
             <label>
-              <input type="checkbox" /> Remember me
+              <input type="checkbox" /> Lembrar-me
             </label>
-            <a href="#">Forgot Password?</a>
+            <a href="#">Esqueceu a senha?</a>
           </div>
 
           <button type="submit">Login</button>
 
           <p>
-            Don't have an account? <a href="#">Register</a>
+            Não tem uma conta? <a href="#">Registrar</a>
           </p>
         </form>
       </div>
