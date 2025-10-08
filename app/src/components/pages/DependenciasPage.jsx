@@ -4,10 +4,10 @@ import { faDownload, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 // Caminhos corrigidos para a estrutura do projeto principal
 import { dependencyData, riskRelations } from '../../data/mockData';
-import Filters from '../dependencias/Filters';
-import DependencyGraph from '../dependencias/DependencyGraph';
-import RiskTable from '../dependencias/RiskTable';
-import NodeDetailsPanel from '../dependencias/NodeDetailsPanel';
+import Filters from './dependencias/Filters';
+import DependencyGraph from './dependencias/DependencyGraph';
+import RiskTable from './dependencias/RiskTable';
+import NodeDetailsPanel from './dependencias/NodeDetailsPanel';
 
 export default function DependenciasPage() {
   const [filters, setFilters] = useState({ search: '', type: '', risk: '' });
