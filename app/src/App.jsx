@@ -1,10 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/pages/Login/Login";
 import Dashboard from "./components/pages/Dashboard/Dashboard";
-import NovosRegistros from "./components/pages/NovosRegistros";
-import Alertas from "./components/pages/Alertas";
-import Historico from "./components/pages/Historico";
-import Documentacao from "./components/pages/Documentacao";
+import Historico from "./components/pages/Historico/Historico";
 import Settings from "./components/pages/Settings";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import DependenciasPage from "./components/pages/DependenciasPage";

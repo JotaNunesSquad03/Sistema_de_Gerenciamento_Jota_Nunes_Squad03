@@ -1,292 +1,194 @@
-import "./Dashboard.scss";
 import { 
-  Search,
-  BarChart3,
-  User,
-  AlertTriangle,
-  Users,
-  Filter,
-  Edit,
-  Eye,
-  Bell,
-  Trash2,
+  Search, 
+  ChevronLeft, 
+  ChevronRight, 
+  User, 
   BookOpen,
+  Filter,
   X,
   Plus,
   MessageSquare,
   Check,
-  Activity
+  Edit,
+  Trash2
 } from "lucide-react";
-import { useDashboard } from "../../../hooks/useDashboard";
+import { useHistorico } from "../../../hooks/useHistorico";
+import "./Historico.scss";
 
-export default function Dashboard() {
+export default function Historico() {
   const {
+    currentPage,
+    searchTerm,
     showFilter,
+    statusFilter,
+    tipoFilter,
     showTechnicalDetails,
     selectedRecord,
     observations,
     newObservation,
     editingObservation,
+    filteredData,
+    totalPages,
+    startIndex,
+    endIndex,
+    currentData,
+    itemsPerPage,
+    setSearchTerm,
+    setShowFilter,
+    setStatusFilter,
+    setTipoFilter,
     setNewObservation,
     setEditingObservation,
+    goToPage,
+    goToPreviousPage,
+    goToNextPage,
+    getStatusClass,
+    getTipoClass,
     handleTechnicalDetails,
     closeTechnicalDetails,
     addObservation,
     editObservation,
-    deleteObservation,
-    toggleFilter
-  } = useDashboard();
+    deleteObservation
+  } = useHistorico();
 
   return (
-    <div className="dashboard-page">
-      <div className="overview-section">
-        <h2>Visão Geral das métricas</h2>
-        <button className="filter_button" onClick={toggleFilter}>
-          <Filter className="filter-icon" />Filtros 
-        </button>
-        {showFilter && (
-          <div className="filter_container">
-            <div className="filter_group">
-              <div className="input">
-                <label>Data de Início</label>
-                <input type='date'></input>
-              </div>
-              <div className="input">
-                <label>Data de Fim</label>
-                <input type='date'></input>
-              </div>
+    <div className="historico-page">
+      <div className="page-header">
+        <h1>Histórico de Alterações</h1>
+        <p>Consulte o histórico de todas as alterações realizadas no sistema.</p>
+      </div>
+
+      <div className="table-container">
+        <div className="table-header">
+          <h2>Registros de Alterações</h2>
+          <div className="search-bar">
+            <div className="search-input">
+              <Search className="search-icon" />
+              <input 
+                type="text" 
+                placeholder="Search" 
+                className="search-field"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
+          </div>
+        </div>
+        
+        <table className="historico-table">
+          <thead>
+            <tr>
+              <th>Nome do Registro</th>
+              <th>Criado por</th>
+              <th>Status</th>
+              <th>Tipo</th>
+              <th>Data de Criação</th>
+              <th>Descrição</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentData.map((item) => (
+              <tr key={item.id}>
+                <td className="nome-cell">{item.nome}</td>
+                <td>
+                  <div className="user-info">
+                    <div className="user-avatar">
+                      <User />
+                    </div>
+                    <span>{item.criadoPor}</span>
+                  </div>
+                </td>
+                <td>
+                  <span className={`status-label ${getStatusClass(item.status)}`}>
+                    {item.status}
+                  </span>
+                </td>
+                <td>
+                  <span className={`tipo-label ${getTipoClass(item.tipo)}`}>
+                    {item.tipo}
+                  </span>
+                </td>
+                <td>{item.dataCriacao}</td>
+                <td className="descricao-cell">{item.descricao}</td>
+                <td>
+                  <div className="action-icons">
+                    <BookOpen 
+                      className="action-icon" 
+                      title="Detalhes técnicos"
+                      onClick={() => handleTechnicalDetails(item)}
+                    />
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {currentData.length === 0 && (
+          <div className="no-data">
+            <p>Nenhum registro encontrado com os filtros aplicados.</p>
           </div>
         )}
-        <div className="metrics-grid">
-          <div className="metric-card">
-            <div className="metric-icon">
-              <BarChart3 />
-            </div>
-            <div className="metric-content">
-              <div className="metric-value">320</div>
-              <p>Novos Registros (quantidade ou último registro)</p>
-            </div>
-          </div>
-
-          <div className="metric-card">
-            <div className="metric-icon">
-              <Bell />
-            </div>
-            <div className="metric-content">
-              <div className="metric-value">12</div>
-              <p>Alterações recentes</p>
-            </div>
-          </div>
-
-          <div className="metric-card">
-            <div className="metric-icon">
-              <AlertTriangle />
-            </div>
-            <div className="metric-content">
-              <div className="metric-value">5</div>
-              <p>Alertas pendentes</p>
-            </div>
-          </div>
-
-          <div className="metric-card">
-            <div className="metric-icon">
-              <Users />
-            </div>
-            <div className="metric-content">
-              <div className="metric-value">110</div>
-              <p>Usuários ativos</p>
-            </div>
-          </div>
-
-          <div className="metric-card">
-            <div className="metric-icon">
-              <AlertTriangle />
-            </div>
-            <div className="metric-content">
-              <div className="metric-value">3</div>
-              <p>Dependências críticas</p>
-            </div>
-          </div>
-        </div>
       </div>
 
-      <div className="registros-section">
-        <div className="table-container">
-          <div className="table-header">
-            <h2>Últimos registros criados</h2>
-            <div className="search-bar">
-              <div className="search-input">
-                <Search className="search-icon" />
-                <input 
-                  type="text" 
-                  placeholder="Search" 
-                  className="search-field"
-                />
-              </div>
-            </div>
+      {/* Paginação */}
+      {totalPages > 1 && (
+        <div className="pagination">
+          <div className="pagination-info">
+            Página {currentPage} de {totalPages}
           </div>
-          <table className="registros-table">
-            <thead>
-              <tr>
-                <th>Nome do Registro</th>
-                <th>Criado por</th>
-                <th>Status</th>
-                <th>Data de Criação</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Sistema de Relatórios v2.1</td>
-                <td>
-                  <div className="user-info">
-                    <div className="user-avatar sarah-avatar">
-                      <User />
-                    </div>
-                    <span>Sarah Eastern</span>
-                  </div>
-                </td>
-                <td>
-                  <span className="status-label status-ativo">ATIVO</span>
-                </td>
-                <td>2024/01/15</td>
-                <td>
-                  <div className="action-icons">
-                    <BookOpen 
-                      className="action-icon" 
-                      title="Detalhes técnicos" 
-                      onClick={() => handleTechnicalDetails({
-                        name: "Sistema de Relatórios v2.1",
-                        createdBy: "Sarah Eastern",
-                        status: "ATIVO",
-                        date: "2024/01/15"
-                      })}
-                    />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Módulo de Autenticação</td>
-                <td>
-                  <div className="user-info">
-                    <div className="user-avatar sarah-avatar">
-                      <User />
-                    </div>
-                    <span>João Silva</span>
-                  </div>
-                </td>
-                <td>
-                  <span className="status-label status-revisao">EM_REVISAO</span>
-                </td>
-                <td>2024/01/14</td>
-                <td>
-                  <div className="action-icons">
-                    <BookOpen 
-                      className="action-icon" 
-                      title="Detalhes técnicos" 
-                      onClick={() => handleTechnicalDetails({
-                        name: "Módulo de Autenticação",
-                        createdBy: "João Silva",
-                        status: "EM_REVISAO",
-                        date: "2024/01/14"
-                      })}
-                    />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>API de Integração Externa</td>
-                <td>
-                  <div className="user-info">
-                    <div className="user-avatar sarah-avatar">
-                      <User />
-                    </div>
-                    <span>Maria Santos</span>
-                  </div>
-                </td>
-                <td>
-                  <span className="status-label status-ativo">ATIVO</span>
-                </td>
-                <td>2024/01/13</td>
-                <td>
-                  <div className="action-icons">
-                    <BookOpen 
-                      className="action-icon" 
-                      title="Detalhes técnicos" 
-                      onClick={() => handleTechnicalDetails({
-                        name: "API de Integração Externa",
-                        createdBy: "Maria Santos",
-                        status: "ATIVO",
-                        date: "2024/01/13"
-                      })}
-                    />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Sistema de Backup Automático</td>
-                <td>
-                  <div className="user-info">
-                    <div className="user-avatar sarah-avatar">
-                      <User />
-                    </div>
-                    <span>Carlos Oliveira</span>
-                  </div>
-                </td>
-                <td>
-                  <span className="status-label status-pendente">PENDENTE</span>
-                </td>
-                <td>2024/01/12</td>
-                <td>
-                  <div className="action-icons">
-                    <BookOpen 
-                      className="action-icon" 
-                      title="Detalhes técnicos" 
-                      onClick={() => handleTechnicalDetails({
-                        name: "Sistema de Backup Automático",
-                        createdBy: "Carlos Oliveira",
-                        status: "PENDENTE",
-                        date: "2024/01/12"
-                      })}
-                    />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Dashboard de Monitoramento</td>
-                <td>
-                  <div className="user-info">
-                    <div className="user-avatar sarah-avatar">
-                      <User />
-                    </div>
-                    <span>Ana Costa</span>
-                  </div>
-                </td>
-                <td>
-                  <span className="status-label status-ativo">ATIVO</span>
-                </td>
-                <td>2024/01/11</td>
-                <td>
-                  <div className="action-icons">
-                    <BookOpen 
-                      className="action-icon" 
-                      title="Detalhes técnicos" 
-                      onClick={() => handleTechnicalDetails({
-                        name: "Dashboard de Monitoramento",
-                        createdBy: "Ana Costa",
-                        status: "ATIVO",
-                        date: "2024/01/11"
-                      })}
-                    />
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          
+          <div className="pagination-controls">
+            <button 
+              className="pagination-btn"
+              onClick={goToPreviousPage}
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft />
+              Anterior
+            </button>
+            
+            <div className="page-numbers">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => {
+                // Mostrar apenas algumas páginas ao redor da atual
+                if (
+                  page === 1 || 
+                  page === totalPages || 
+                  (page >= currentPage - 2 && page <= currentPage + 2)
+                ) {
+                  return (
+                    <button
+                      key={page}
+                      className={`page-number ${currentPage === page ? 'active' : ''}`}
+                      onClick={() => goToPage(page)}
+                    >
+                      {page}
+                    </button>
+                  );
+                } else if (
+                  page === currentPage - 3 || 
+                  page === currentPage + 3
+                ) {
+                  return <span key={page} className="page-ellipsis">...</span>;
+                }
+                return null;
+              })}
+            </div>
+            
+            <button 
+              className="pagination-btn"
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Próxima
+              <ChevronRight />
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
+      {/* Modal de Detalhes Técnicos */}
       {showTechnicalDetails && (
         <div className="modal-overlay" onClick={closeTechnicalDetails}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -303,19 +205,27 @@ export default function Dashboard() {
                   <div className="detail-grid">
                     <div className="detail-item">
                       <span className="detail-label">Nome:</span>
-                      <span className="detail-value">{selectedRecord?.name}</span>
+                      <span className="detail-value">{selectedRecord?.nome}</span>
                     </div>
                     <div className="detail-item">
                       <span className="detail-label">Criado por:</span>
-                      <span className="detail-value">{selectedRecord?.createdBy}</span>
+                      <span className="detail-value">{selectedRecord?.criadoPor}</span>
                     </div>
                     <div className="detail-item">
                       <span className="detail-label">Status:</span>
                       <span className="detail-value">{selectedRecord?.status}</span>
                     </div>
                     <div className="detail-item">
+                      <span className="detail-label">Tipo:</span>
+                      <span className="detail-value">{selectedRecord?.tipo}</span>
+                    </div>
+                    <div className="detail-item">
                       <span className="detail-label">Data de Criação:</span>
-                      <span className="detail-value">{selectedRecord?.date}</span>
+                      <span className="detail-value">{selectedRecord?.dataCriacao}</span>
+                    </div>
+                    <div className="detail-item">
+                      <span className="detail-label">Descrição:</span>
+                      <span className="detail-value">{selectedRecord?.descricao}</span>
                     </div>
                   </div>
                 </div>
@@ -404,8 +314,8 @@ export default function Dashboard() {
                   </div>
 
                   <div className="observations-list">
-                    {observations[selectedRecord?.name]?.length > 0 ? (
-                      observations[selectedRecord.name].map((observation) => (
+                    {observations[selectedRecord?.id || selectedRecord?.nome]?.length > 0 ? (
+                      observations[selectedRecord.id || selectedRecord.nome].map((observation) => (
                         <div key={observation.id} className="observation-item">
                           <div className="observation-header">
                             <div className="observation-meta">
@@ -497,7 +407,6 @@ export default function Dashboard() {
           </div>
         </div>
       )}
-
     </div>
   );
 }

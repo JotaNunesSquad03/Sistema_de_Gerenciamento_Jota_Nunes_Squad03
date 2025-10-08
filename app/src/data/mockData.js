@@ -74,3 +74,187 @@ export const riskRelations = [
         description: 'Dependência bem documentada'
     }
 ];
+
+// Dados mock para histórico de alterações
+export const historicoData = [
+    {
+        id: 1,
+        nome: "Sistema de Relatórios v2.1",
+        criadoPor: "Sarah Eastern",
+        status: "ATIVO",
+        dataCriacao: "2024/01/15",
+        tipo: "Criação",
+        descricao: "Novo sistema de relatórios com funcionalidades avançadas"
+    },
+    {
+        id: 2,
+        nome: "Módulo de Autenticação",
+        criadoPor: "João Silva",
+        status: "EM_REVISAO",
+        dataCriacao: "2024/01/14",
+        tipo: "Atualização",
+        descricao: "Atualização do sistema de autenticação com 2FA"
+    },
+    {
+        id: 3,
+        nome: "API de Integração Externa",
+        criadoPor: "Maria Santos",
+        status: "ATIVO",
+        dataCriacao: "2024/01/13",
+        tipo: "Criação",
+        descricao: "Nova API para integração com sistemas externos"
+    },
+    {
+        id: 4,
+        nome: "Sistema de Backup Automático",
+        criadoPor: "Carlos Oliveira",
+        status: "PENDENTE",
+        dataCriacao: "2024/01/12",
+        tipo: "Criação",
+        descricao: "Sistema automatizado de backup de dados"
+    },
+    {
+        id: 5,
+        nome: "Dashboard de Monitoramento",
+        criadoPor: "Ana Costa",
+        status: "ATIVO",
+        dataCriacao: "2024/01/11",
+        tipo: "Criação",
+        descricao: "Dashboard para monitoramento em tempo real"
+    },
+    {
+        id: 6,
+        nome: "Módulo de Notificações",
+        criadoPor: "Pedro Lima",
+        status: "ATIVO",
+        dataCriacao: "2024/01/10",
+        tipo: "Criação",
+        descricao: "Sistema de notificações push e email"
+    },
+    {
+        id: 7,
+        nome: "Sistema de Logs",
+        criadoPor: "Fernanda Rocha",
+        status: "ATIVO",
+        dataCriacao: "2024/01/09",
+        tipo: "Atualização",
+        descricao: "Melhorias no sistema de logs de auditoria"
+    },
+    {
+        id: 8,
+        nome: "API de Relatórios",
+        criadoPor: "Roberto Alves",
+        status: "ATIVO",
+        dataCriacao: "2024/01/08",
+        tipo: "Criação",
+        descricao: "API para geração de relatórios personalizados"
+    },
+    {
+        id: 9,
+        nome: "Sistema de Cache",
+        criadoPor: "Juliana Mendes",
+        status: "ATIVO",
+        dataCriacao: "2024/01/07",
+        tipo: "Criação",
+        descricao: "Sistema de cache para otimização de performance"
+    },
+    {
+        id: 10,
+        nome: "Módulo de Usuários",
+        criadoPor: "Lucas Ferreira",
+        status: "EM_REVISAO",
+        dataCriacao: "2024/01/06",
+        tipo: "Atualização",
+        descricao: "Atualização do módulo de gerenciamento de usuários"
+    },
+    {
+        id: 11,
+        nome: "Sistema de Permissões",
+        criadoPor: "Camila Souza",
+        status: "ATIVO",
+        dataCriacao: "2024/01/05",
+        tipo: "Criação",
+        descricao: "Sistema granular de permissões e roles"
+    },
+    {
+        id: 12,
+        nome: "API de Dados",
+        criadoPor: "Diego Costa",
+        status: "ATIVO",
+        dataCriacao: "2024/01/04",
+        tipo: "Criação",
+        descricao: "API para acesso e manipulação de dados"
+    },
+    {
+        id: 13,
+        nome: "Sistema de Validação",
+        criadoPor: "Patricia Lima",
+        status: "ATIVO",
+        dataCriacao: "2024/01/03",
+        tipo: "Criação",
+        descricao: "Sistema de validação de dados e formulários"
+    },
+    {
+        id: 14,
+        nome: "Módulo de Relatórios",
+        criadoPor: "Gabriel Santos",
+        status: "PENDENTE",
+        dataCriacao: "2024/01/02",
+        tipo: "Atualização",
+        descricao: "Atualização do módulo de relatórios existente"
+    },
+    {
+        id: 15,
+        nome: "Sistema de Configurações",
+        criadoPor: "Mariana Oliveira",
+        status: "ATIVO",
+        dataCriacao: "2024/01/01",
+        tipo: "Criação",
+        descricao: "Sistema centralizado de configurações"
+    },
+    {
+        id: 16,
+        nome: "API de Autenticação",
+        criadoPor: "Rafael Silva",
+        status: "ATIVO",
+        dataCriacao: "2023/12/31",
+        tipo: "Criação",
+        descricao: "API para autenticação e autorização"
+    },
+    {
+        id: 17,
+        nome: "Sistema de Monitoramento",
+        criadoPor: "Beatriz Costa",
+        status: "ATIVO",
+        dataCriacao: "2023/12/30",
+        tipo: "Criação",
+        descricao: "Sistema de monitoramento de performance"
+    },
+    {
+        id: 18,
+        nome: "Módulo de Relatórios",
+        criadoPor: "Thiago Almeida",
+        status: "ATIVO",
+        dataCriacao: "2023/12/29",
+        tipo: "Criação",
+        descricao: "Módulo base para geração de relatórios"
+    },
+    {
+        id: 19,
+        nome: "Sistema de Backup",
+        criadoPor: "Larissa Rocha",
+        status: "ATIVO",
+        dataCriacao: "2023/12/28",
+        tipo: "Criação",
+        descricao: "Sistema de backup e recuperação de dados"
+    },
+    {
+        id: 20,
+        nome: "API de Integração",
+        criadoPor: "Felipe Mendes",
+        status: "ATIVO",
+        dataCriacao: "2023/12/27",
+        tipo: "Criação",
+        descricao: "API para integração com sistemas terceiros"
+    }
+];
