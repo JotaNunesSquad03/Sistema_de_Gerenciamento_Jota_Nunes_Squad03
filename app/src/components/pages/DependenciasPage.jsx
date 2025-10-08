@@ -89,10 +89,10 @@ export default function DependenciasPage() {
           <p className="text-gray-600 mt-1">Visualize as relações entre customizações e identifique riscos de impacto</p>
         </div>
         <div className="flex space-x-3">
-          <button onClick={handleClearFilters} className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">
+          <button onClick={handleClearFilters} className="filter_button">
             <FontAwesomeIcon icon={faTimes} className="mr-2" />Limpar Filtros
           </button>
-          <button className="bg-primary text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors">
+          <button className="filter_button filter_button--red">
             <FontAwesomeIcon icon={faDownload} className="mr-2" />Exportar Mapa
           </button>
         </div>
