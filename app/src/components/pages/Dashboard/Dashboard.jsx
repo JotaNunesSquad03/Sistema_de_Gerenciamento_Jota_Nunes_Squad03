@@ -42,7 +42,8 @@ export default function Dashboard() {
       <div className="overview-section">
         <h2>Visão Geral das métricas</h2>
         <button className="filter_button" onClick={toggleFilter}>
-          <Filter className="filter-icon" />Filtros 
+          <Filter className="filter-icon" />
+          {showFilter ? 'Ocultar Filtros' : 'Filtros'}
         </button>
         {showFilter && (
           <div className="filter_container">
@@ -89,25 +90,29 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="metric-card">
-            <div className="metric-icon">
-              <Users />
+          {!showFilter && (
+            <div className="metric-card">
+              <div className="metric-icon">
+                <Users />
+              </div>
+              <div className="metric-content">
+                <div className="metric-value">110</div>
+                <p>Usuários ativos</p>
+              </div>
             </div>
-            <div className="metric-content">
-              <div className="metric-value">110</div>
-              <p>Usuários ativos</p>
-            </div>
-          </div>
+          )}
 
-          <div className="metric-card">
-            <div className="metric-icon">
-              <AlertTriangle />
+          {!showFilter && (
+            <div className="metric-card">
+              <div className="metric-icon">
+                <AlertTriangle />
+              </div>
+              <div className="metric-content">
+                <div className="metric-value">3</div>
+                <p>Dependências críticas</p>
+              </div>
             </div>
-            <div className="metric-content">
-              <div className="metric-value">3</div>
-              <p>Dependências críticas</p>
-            </div>
-          </div>
+          )}
         </div>
       </div>
 
