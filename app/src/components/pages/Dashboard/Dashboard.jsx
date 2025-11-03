@@ -56,8 +56,32 @@ export default function Dashboard() {
     loadData();
   }, []);
 
-  if (loading) return <p>Carregando métricas...</p>
-  if (!metrics) return <p>Não foi possível carregar as métricas</p>
+  const metricsCards = [
+    {
+      icon: <BarChart3 />,
+      value: metrics?.totais?.fv,
+      label: 'Formulas Visuais',
+      show: true,
+    }, 
+    {
+      icon: <AlertTriangle />,
+      value: metrics?.totais?.sql,
+      label: 'Consultas SQL',
+      show: true,
+    },
+    {
+      icon: <Bell />,
+      value: metrics?.totais?.report,
+      label: 'Relatórios Gerados',
+      show: true,
+    },
+    {
+      icon: <Bell />,
+      value: metrics?.totais?.dependencias,
+      label: 'Dependências',
+      show: true,
+    }
+  ]
 
   return (
     <div className="dashboard-page">
@@ -82,59 +106,26 @@ export default function Dashboard() {
           </div>
         )}
         <div className="metrics-grid">
-          <div className="metric-card">
-            <div className="metric-icon">
-              <BarChart3 />
-            </div>
-            <div className="metric-content">
-              <div className="metric-value">320</div>
-              <p>{metrics?.totais?.fv}</p>
-            </div>
-          </div>
-
-          <div className="metric-card">
-            <div className="metric-icon">
-              <Bell />
-            </div>
-            <div className="metric-content">
-              <div className="metric-value">12</div>
-              <p>Alterações recentes</p>
-            </div>
-          </div>
-
-          <div className="metric-card">
-            <div className="metric-icon">
-              <AlertTriangle />
-            </div>
-            <div className="metric-content">
-              <div className="metric-value">5</div>
-              <p>Alertas pendentes</p>
-            </div>
-          </div>
-
-          {!showFilter && (
-            <div className="metric-card">
-              <div className="metric-icon">
-                <Users />
-              </div>
-              <div className="metric-content">
-                <div className="metric-value">110</div>
-                <p>Usuários ativos</p>
-              </div>
-            </div>
+          {loading ? (
+            <p>Carregando métricas...</p>
+          ):(
+            metrics ? (
+              metricsCards
+              .filter((card) => card.show)
+              .map((card,index)=>(
+                <div key={index} className={`metric-card ${card.variant || ''}`}>
+                  <div className="metric-icon">{card.icon}</div>
+                  <div className='metric-content'>
+                    <div className="metric-value">{card.value ?? '-'}</div>
+                    <p>{card.label}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>Não foi possível carregar as métricas</p>
+            )
           )}
-
-          {!showFilter && (
-            <div className="metric-card">
-              <div className="metric-icon">
-                <AlertTriangle />
-              </div>
-              <div className="metric-content">
-                <div className="metric-value">3</div>
-                <p>Dependências críticas</p>
-              </div>
-            </div>
-          )}
+          
         </div>
       </div>
 
