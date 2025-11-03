@@ -18,6 +18,8 @@ import {
   Activity
 } from "lucide-react";
 import { useDashboard } from "../../../hooks/useDashboard";
+import {useEffect, useState} from "react";
+import { getDashboardMetrics } from "../../../services/dashboardService";
 
 export default function Dashboard() {
   const {
@@ -36,6 +38,26 @@ export default function Dashboard() {
     deleteObservation,
     toggleFilter
   } = useDashboard();
+
+  const [metrics, setMetrics] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(()=>{
+    async function loadData(){
+      try{
+        const data = await getDashboardMetrics();
+        setMetrics(data);
+      }catch(error){
+        console.error("Erro ao carregar métricas do dashboard:", error);
+      }finally{
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
+
+  if (loading) return <p>Carregando métricas...</p>
+  if (!metrics) return <p>Não foi possível carregar as métricas</p>
 
   return (
     <div className="dashboard-page">
@@ -66,7 +88,7 @@ export default function Dashboard() {
             </div>
             <div className="metric-content">
               <div className="metric-value">320</div>
-              <p>Novos Registros (quantidade ou último registro)</p>
+              <p>{metrics?.totais?.fv}</p>
             </div>
           </div>
 
