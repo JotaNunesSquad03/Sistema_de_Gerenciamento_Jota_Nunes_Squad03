@@ -34,8 +34,8 @@ export default function RecentRecords({ handleTechnicalDetails}) {
 
     return(
         <div className="registros-section">
-            <div >
-                <div >
+            <div className="table-container">
+                <div className="table-header">
                     <h2>Últimos registros criados</h2>
                     <div className="search-bar">
                         <div className="search-input">
@@ -66,7 +66,7 @@ export default function RecentRecords({ handleTechnicalDetails}) {
                                             </div>
                                         </td>
                                         <td>
-                                            <span className={`status-label status-${record.status.toLowerCase()}`}>
+                                            <span className={`status-label status-${record.status.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}`}>
                                                 {record.status}
                                             </span>
                                         </td>
