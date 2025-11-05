@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import { useDashboard } from "../../../hooks/useDashboard";
 import {useEffect, useState} from "react";
+import SystemTotals from "./partials/SystemTotals";
+import MissingDocs from "./partials/MissingDocs";
 import { getDashboardMetrics } from "../../../services/dashboardService";
 
 export default function Dashboard() {
@@ -56,77 +58,11 @@ export default function Dashboard() {
     loadData();
   }, []);
 
-  const metricsCards = [
-    {
-      icon: <BarChart3 />,
-      value: metrics?.totais?.fv,
-      label: 'Formulas Visuais',
-      show: true,
-    }, 
-    {
-      icon: <AlertTriangle />,
-      value: metrics?.totais?.sql,
-      label: 'Consultas SQL',
-      show: true,
-    },
-    {
-      icon: <Bell />,
-      value: metrics?.totais?.report,
-      label: 'Relatórios Gerados',
-      show: true,
-    },
-    {
-      icon: <Bell />,
-      value: metrics?.totais?.dependencias,
-      label: 'Dependências',
-      show: true,
-    }
-  ]
-
   return (
     <div className="dashboard-page">
       <div className="overview-section">
-        <h2>Visão Geral das métricas</h2>
-        <button className="filter_button" onClick={toggleFilter}>
-          <Filter className="filter-icon" />
-          {showFilter ? 'Ocultar Filtros' : 'Filtros'}
-        </button>
-        {showFilter && (
-          <div className="filter_container">
-            <div className="filter_group">
-              <div className="input">
-                <label>Data de Início</label>
-                <input type='date'></input>
-              </div>
-              <div className="input">
-                <label>Data de Fim</label>
-                <input type='date'></input>
-              </div>
-            </div>
-          </div>
-        )}
-        <div className="metrics-grid">
-          {loading ? (
-            <p>Carregando métricas...</p>
-          ):(
-            metrics ? (
-              metricsCards
-              .filter((card) => card.show)
-              .map((card,index)=>(
-                <div key={index} className={`metric-card ${card.variant || ''}`}>
-                  <div className="metric-icon">{card.icon}</div>
-                  <div className='metric-content'>
-                    <div className="metric-value">{card.value ?? '-'}</div>
-                    <p>{card.label}</p>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p>Não foi possível carregar as métricas</p>
-            )
-          )}
-          
-        </div>
+        <SystemTotals metrics={metrics} loading={loading}/>
+        <MissingDocs metrics={metrics}/>
       </div>
 
       <div className="registros-section">
