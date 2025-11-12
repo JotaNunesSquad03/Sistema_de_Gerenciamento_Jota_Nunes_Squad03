@@ -22,6 +22,7 @@ import {useEffect, useState} from "react";
 import SystemTotals from "./partials/SystemTotals";
 import MissingDocs from "./partials/MissingDocs";
 import RecentRecords from "./partials/RecentRecords";
+import RecentChanges from "./partials/RecentChanges";
 import { getDashboardMetrics } from "../../../services/dashboardService";
 
 export default function Dashboard() {
@@ -63,6 +64,7 @@ export default function Dashboard() {
     <div className="dashboard-page">
       <div className="overview-section">
         <SystemTotals metrics={metrics} loading={loading}/>
+        <RecentChanges metrics= {metrics}/>
         <MissingDocs metrics={metrics}/>
         <RecentRecords handleTechnicalDetails={handleTechnicalDetails}/>
       </div>
