@@ -19,11 +19,6 @@ export default function MissingDocs({metrics}){
                             <div className='metric-value missing-doc-value'>{item.value ?? "-"}</div>
                             <p className='missing-doc-label'>{item.label}</p>
                         </div>
-                        {(item.value && item.value > 0) && (
-                            <div className='missing-doc-badge'>
-                                <AlertCircle size={14} />
-                            </div>
-                        )}
                     </div>
                 ))}
             </div>
