@@ -24,6 +24,7 @@ import MissingDocs from "./partials/MissingDocs";
 import RecentRecords from "./partials/RecentRecords";
 import RecentChanges from "./partials/RecentChanges";
 import { getDashboardMetrics } from "../../../services/dashboardService";
+import { getRecentRecords } from "../../../services/recentRecords";
 
 export default function Dashboard() {
   const {
@@ -44,6 +45,7 @@ export default function Dashboard() {
   } = useDashboard();
 
   const [metrics, setMetrics] = useState(null)
+  const [recentRecords, setRecentRecords] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(()=>{
@@ -51,8 +53,12 @@ export default function Dashboard() {
       try{
         const data = await getDashboardMetrics();
         setMetrics(data);
+
+        const records = await getRecentRecords();
+        setRecentRecords(records);
+
       }catch(error){
-        console.error("Erro ao carregar métricas do dashboard:", error);
+        console.error("Erro ao carregar dados do dashboard:", error);
       }finally{
         setLoading(false);
       }
@@ -60,13 +66,14 @@ export default function Dashboard() {
     loadData();
   }, []);
 
+
   return (
     <div className="dashboard-page">
       <div className="overview-section">
         <SystemTotals metrics={metrics} loading={loading}/>
         <RecentChanges metrics= {metrics}/>
         <MissingDocs metrics={metrics}/>
-        <RecentRecords handleTechnicalDetails={handleTechnicalDetails}/>
+        <RecentRecords records={recentRecords} handleTechnicalDetails={handleTechnicalDetails}/>
       </div>
 
       {showTechnicalDetails && (
@@ -85,19 +92,19 @@ export default function Dashboard() {
                   <div className="detail-grid">
                     <div className="detail-item">
                       <span className="detail-label">Nome:</span>
-                      <span className="detail-value">{selectedRecord?.name}</span>
+                      <span className="detail-value">{selectedRecord?.descricao}</span>
                     </div>
                     <div className="detail-item">
                       <span className="detail-label">Criado por:</span>
-                      <span className="detail-value">{selectedRecord?.createdBy}</span>
+                      <span className="detail-value">{selectedRecord?.usuario}</span>
                     </div>
                     <div className="detail-item">
-                      <span className="detail-label">Status:</span>
-                      <span className="detail-value">{selectedRecord?.status}</span>
+                      <span className="detail-label">Origem:</span>
+                      <span className="detail-value">{selectedRecord?.origem}</span>
                     </div>
                     <div className="detail-item">
                       <span className="detail-label">Data de Criação:</span>
-                      <span className="detail-value">{selectedRecord?.date}</span>
+                      <span className="detail-value">{selectedRecord?.data?.split('T')[0]}</span>
                     </div>
                   </div>
                 </div>
@@ -186,8 +193,8 @@ export default function Dashboard() {
                   </div>
 
                   <div className="observations-list">
-                    {observations[selectedRecord?.name]?.length > 0 ? (
-                      observations[selectedRecord.name].map((observation) => (
+                    {observations[selectedRecord?.id]?.length > 0 ? (
+                      observations[selectedRecord.id].map((observation) => (
                         <div key={observation.id} className="observation-item">
                           <div className="observation-header">
                             <div className="observation-meta">

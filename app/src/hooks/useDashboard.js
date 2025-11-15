@@ -22,7 +22,7 @@ export const useDashboard = () => {
 
   const addObservation = () => {
     if (newObservation.trim() && selectedRecord) {
-      const recordId = selectedRecord.name;
+      const recordId = selectedRecord.id;
       const observation = {
         id: Date.now(),
         text: newObservation.trim(),
@@ -41,7 +41,7 @@ export const useDashboard = () => {
 
   const editObservation = (observationId, newText) => {
     if (selectedRecord) {
-      const recordId = selectedRecord.name;
+      const recordId = selectedRecord.id;
       setObservations(prev => ({
         ...prev,
         [recordId]: prev[recordId]?.map(obs => 
@@ -54,7 +54,7 @@ export const useDashboard = () => {
 
   const deleteObservation = (observationId) => {
     if (selectedRecord) {
-      const recordId = selectedRecord.name;
+      const recordId = selectedRecord.id;
       setObservations(prev => ({
         ...prev,
         [recordId]: prev[recordId]?.filter(obs => obs.id !== observationId) || []
