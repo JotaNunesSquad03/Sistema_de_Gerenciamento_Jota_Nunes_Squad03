@@ -11,9 +11,29 @@ import {
 } from "lucide-react";
 import { useHistorico } from "../../../hooks/useHistorico";
 import HistoricoTable from "./partials/HistoricoTable";
+import { getHistoryTable } from "../../../services/historytable";
 import "./Historico.scss";
+import { useState, useEffect } from "react";
 
 export default function Historico() {
+  const [historyTable, setHistoryTable] = useState([]);
+
+  useEffect(()=>{
+    async function loadData(){
+      try{
+        const data = await getHistoryTable();
+        const historyData = Array.isArray(data) 
+          ? data 
+          : (data?.data || data?.items || []);
+        setHistoryTable(historyData);
+      }catch(error){
+        console.error("Erro ao carregar dados do histórico", error);
+        setHistoryTable([]);
+      }
+    }
+    loadData();
+  },[]);
+
   const {
     currentPage,
     searchTerm,
@@ -45,7 +65,7 @@ export default function Historico() {
     addObservation,
     editObservation,
     deleteObservation
-  } = useHistorico();
+  } = useHistorico(historyTable);
 
   return (
     <div className="historico-page">
@@ -72,7 +92,7 @@ export default function Historico() {
         </div>
         
         <HistoricoTable 
-          currentData={currentData}
+          historyTable={currentData}
           handleTechnicalDetails={handleTechnicalDetails}
         />
       </div>
@@ -150,27 +170,19 @@ export default function Historico() {
                   <div className="detail-grid">
                     <div className="detail-item">
                       <span className="detail-label">Nome:</span>
-                      <span className="detail-value">{selectedRecord?.nome}</span>
+                      <span className="detail-value">{selectedRecord?.descricao}</span>
                     </div>
                     <div className="detail-item">
-                      <span className="detail-label">Criado por:</span>
-                      <span className="detail-value">{selectedRecord?.criadoPor}</span>
-                    </div>
-                    <div className="detail-item">
-                      <span className="detail-label">Status:</span>
-                      <span className="detail-value">{selectedRecord?.status}</span>
+                      <span className="detail-label">Usuário:</span>
+                      <span className="detail-value">{selectedRecord?.usuario}</span>
                     </div>
                     <div className="detail-item">
                       <span className="detail-label">Tipo:</span>
-                      <span className="detail-value">{selectedRecord?.tipo}</span>
+                      <span className="detail-value">{selectedRecord?.origem}</span>
                     </div>
                     <div className="detail-item">
                       <span className="detail-label">Data de Criação:</span>
-                      <span className="detail-value">{selectedRecord?.dataCriacao}</span>
-                    </div>
-                    <div className="detail-item">
-                      <span className="detail-label">Descrição:</span>
-                      <span className="detail-value">{selectedRecord?.descricao}</span>
+                      <span className="detail-value">{selectedRecord?.data?.split('T')[0]}</span>
                     </div>
                   </div>
                 </div>

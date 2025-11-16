@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
-import { historicoData } from "../data/mockData";
 
-export function useHistorico() {
+export function useHistorico(apiData = []) {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilter, setShowFilter] = useState(false);
@@ -15,18 +14,18 @@ export function useHistorico() {
   
   const itemsPerPage = 10;
 
+  const sourceData = Array.isArray(apiData) ? apiData : []
+
   const filteredData = useMemo(() => {
-    return historicoData.filter(item => {
-      const matchesSearch = item.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           item.criadoPor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           item.descricao.toLowerCase().includes(searchTerm.toLowerCase());
+    return sourceData.filter(item => {
+      const matchesSearch = item.descricao?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.usuario?.toLowerCase().includes(searchTerm.toLowerCase());
       
-      const matchesStatus = statusFilter === "TODOS" || item.status === statusFilter;
-      const matchesTipo = tipoFilter === "TODOS" || item.tipo === tipoFilter;
+      const matchesTipo = tipoFilter === "TODOS" || item.origem === tipoFilter;
       
-      return matchesSearch && matchesStatus && matchesTipo;
+      return matchesSearch && matchesTipo;
     });
-  }, [searchTerm, statusFilter, tipoFilter]);
+  }, [searchTerm, tipoFilter, sourceData]);
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -59,7 +58,7 @@ export function useHistorico() {
 
   const addObservation = () => {
     if (newObservation.trim() && selectedRecord) {
-      const recordId = selectedRecord.id || selectedRecord.nome;
+      const recordId = selectedRecord.id;
       const observation = {
         id: Date.now(),
         text: newObservation.trim(),
@@ -78,7 +77,7 @@ export function useHistorico() {
 
   const editObservation = (observationId, newText) => {
     if (selectedRecord) {
-      const recordId = selectedRecord.id || selectedRecord.nome;
+      const recordId = selectedRecord.id;
       setObservations(prev => ({
         ...prev,
         [recordId]: prev[recordId]?.map(obs => 
@@ -91,7 +90,7 @@ export function useHistorico() {
 
   const deleteObservation = (observationId) => {
     if (selectedRecord) {
-      const recordId = selectedRecord.id || selectedRecord.nome;
+      const recordId = selectedRecord.id;
       setObservations(prev => ({
         ...prev,
         [recordId]: prev[recordId]?.filter(obs => obs.id !== observationId) || []
