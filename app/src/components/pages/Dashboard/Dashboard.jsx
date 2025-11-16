@@ -110,36 +110,6 @@ export default function Dashboard() {
                 </div>
 
                 <div className="detail-section">
-                  <h4>Especificações Técnicas</h4>
-                  <div className="technical-specs">
-                    <div className="spec-item">
-                      <span className="spec-label">Tipo de Customização:</span>
-                      <span className="spec-value">Módulo de Relatórios</span>
-                    </div>
-                    <div className="spec-item">
-                      <span className="spec-label">Versão da API:</span>
-                      <span className="spec-value">v2.1.3</span>
-                    </div>
-                    <div className="spec-item">
-                      <span className="spec-label">Framework Utilizado:</span>
-                      <span className="spec-value">React 18.2.0</span>
-                    </div>
-                    <div className="spec-item">
-                      <span className="spec-label">Dependências:</span>
-                      <span className="spec-value">Lodash, Axios, Chart.js</span>
-                    </div>
-                    <div className="spec-item">
-                      <span className="spec-label">Banco de Dados:</span>
-                      <span className="spec-value">PostgreSQL 14.5</span>
-                    </div>
-                    <div className="spec-item">
-                      <span className="spec-label">Ambiente:</span>
-                      <span className="spec-value">Produção</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="detail-section">
                   <h4>Documentação Técnica</h4>
                   <div className="documentation-content">
                     <p><strong>Descrição:</strong> Este módulo implementa um sistema de relatórios personalizado que permite a geração de métricas em tempo real e exportação de dados em múltiplos formatos.</p>

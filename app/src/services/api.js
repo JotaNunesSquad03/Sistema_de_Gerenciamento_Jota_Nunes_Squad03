@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/", // depois você troca pelo endpoint real
+  baseURL: "https://sistemas-gerenciador-customizacoes-rm-jn-3gsn.onrender.com", // depois você troca pelo endpoint real
 });
 
 export default api;
