@@ -45,30 +45,6 @@ export function useHistorico() {
     setCurrentPage(prev => Math.min(totalPages, prev + 1));
   };
 
-  const getStatusClass = (status) => {
-    switch (status) {
-      case "ATIVO":
-        return "status-ativo";
-      case "EM_REVISAO":
-        return "status-revisao";
-      case "PENDENTE":
-        return "status-pendente";
-      default:
-        return "status-default";
-    }
-  };
-
-  const getTipoClass = (tipo) => {
-    switch (tipo) {
-      case "Criação":
-        return "tipo-criacao";
-      case "Atualização":
-        return "tipo-atualizacao";
-      default:
-        return "tipo-default";
-    }
-  };
-
   const handleTechnicalDetails = (record) => {
     setSelectedRecord(record);
     setShowTechnicalDetails(true);
@@ -149,8 +125,6 @@ export function useHistorico() {
     goToPage,
     goToPreviousPage,
     goToNextPage,
-    getStatusClass,
-    getTipoClass,
     handleTechnicalDetails,
     closeTechnicalDetails,
     addObservation,

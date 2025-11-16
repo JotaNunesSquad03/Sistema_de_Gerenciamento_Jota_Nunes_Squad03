@@ -40,8 +40,6 @@ export default function Historico() {
     goToPage,
     goToPreviousPage,
     goToNextPage,
-    getStatusClass,
-    getTipoClass,
     handleTechnicalDetails,
     closeTechnicalDetails,
     addObservation,
@@ -75,8 +73,6 @@ export default function Historico() {
         
         <HistoricoTable 
           currentData={currentData}
-          getStatusClass={getStatusClass}
-          getTipoClass={getTipoClass}
           handleTechnicalDetails={handleTechnicalDetails}
         />
       </div>

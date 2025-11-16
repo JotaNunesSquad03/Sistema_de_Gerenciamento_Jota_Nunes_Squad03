@@ -1,5 +1,7 @@
 import { BookOpen, User } from "lucide-react";
 
+const dataTable=[]
+
 export default function HistoricoTable({ 
   currentData, 
   getStatusClass, 
@@ -11,12 +13,10 @@ export default function HistoricoTable({
       <table className="historico-table">
         <thead>
           <tr>
-            <th>Nome do Registro</th>
-            <th>Criado por</th>
-            <th>Status</th>
-            <th>Tipo</th>
-            <th>Data de Criação</th>
-            <th>Descrição</th>
+            <th>Descrição do Registro</th>
+            <th>Usuário</th>
+            <th>Origem</th>
+            <th>Data de Alteração</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -33,17 +33,11 @@ export default function HistoricoTable({
                 </div>
               </td>
               <td>
-                <span className={`status-label ${getStatusClass(item.status)}`}>
-                  {item.status}
-                </span>
-              </td>
-              <td>
-                <span className={`tipo-label ${getTipoClass(item.tipo)}`}>
+                <span className={`tipo-label `}>
                   {item.tipo}
                 </span>
               </td>
               <td>{item.dataCriacao}</td>
-              <td className="descricao-cell">{item.descricao}</td>
               <td>
                 <div className="action-icons">
                   <BookOpen 
