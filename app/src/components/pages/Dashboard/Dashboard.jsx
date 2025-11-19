@@ -25,6 +25,7 @@ import RecentRecords from "./partials/RecentRecords";
 import RecentChanges from "./partials/RecentChanges";
 import { getDashboardMetrics } from "../../../services/dashboardService";
 import { getRecentRecords } from "../../../services/recentRecords";
+import { getDocumentation } from "../../../services/documentationService";
 
 export default function Dashboard() {
   const {
@@ -47,6 +48,8 @@ export default function Dashboard() {
   const [metrics, setMetrics] = useState(null)
   const [recentRecords, setRecentRecords] = useState([])
   const [loading, setLoading] = useState(true)
+  const [documentation, setdocumentation] =useState(null)
+  const [loadingDocs, setLoadingDocs] = useState(true);
 
   useEffect(()=>{
     async function loadData(){
@@ -65,6 +68,27 @@ export default function Dashboard() {
     }
     loadData();
   }, []);
+
+  useEffect(()=>{
+    async function loadDocumentacao(){
+      if (!selectedRecord) return;
+      setLoading(true);
+      try{
+        const data = await getDocumentation(
+          selectedRecord.origem,
+          selectedRecord.id
+        )
+        setdocumentation(data);
+      }catch(error){
+        console.error("Erro ao carregar documentação técnica:", error);
+        setdocumentation(null);
+      }
+      setLoadingDocs(false)
+    }
+    if(showTechnicalDetails){
+      loadDocumentacao();
+    }
+  },[showTechnicalDetails, selectedRecord]);
 
 
   return (
@@ -112,27 +136,18 @@ export default function Dashboard() {
                 <div className="detail-section">
                   <h4>Documentação Técnica</h4>
                   <div className="documentation-content">
-                    <p><strong>Descrição:</strong> Este módulo implementa um sistema de relatórios personalizado que permite a geração de métricas em tempo real e exportação de dados em múltiplos formatos.</p>
-                    
-                    <p><strong>Funcionalidades Principais:</strong></p>
-                    <ul>
-                      <li>Geração de relatórios personalizados</li>
-                      <li>Filtros avançados por período</li>
-                      <li>Exportação em PDF, Excel e CSV</li>
-                      <li>Cache inteligente para performance</li>
-                      <li>Integração com APIs externas</li>
-                    </ul>
-
-                    <p><strong>Configurações Específicas:</strong></p>
-                    <ul>
-                      <li>Timeout de requisições: 30 segundos</li>
-                      <li>Cache TTL: 5 minutos</li>
-                      <li>Máximo de registros por página: 100</li>
-                      <li>Compressão de dados: GZIP</li>
-                    </ul>
-
-                    <p><strong>Notas de Implementação:</strong></p>
-                    <p>Esta customização foi desenvolvida seguindo os padrões de arquitetura definidos pela equipe de desenvolvimento. Utiliza hooks personalizados para gerenciamento de estado e implementa lazy loading para otimização de performance.</p>
+                    {loadingDocs ? (
+                      <p>Carregando documentação...</p>
+                    ): !documentation ?(
+                      <div className="no-doc">
+                        <button className="btn-add-doc">
+                          Criar Documentação
+                        </button>
+                      </div>
+                    ):(
+                      <div className="doc-view">
+                        <p>mostra doc</p>
+                      </div>)}  
                   </div>
                 </div>
 
