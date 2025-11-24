@@ -72,7 +72,7 @@ export default function Dashboard() {
   useEffect(()=>{
     async function loadDocumentacao(){
       if (!selectedRecord) return;
-      setLoading(true);
+      setLoadingDocs(true);
       try{
         const data = await getDocumentation(
           selectedRecord.origem,
@@ -81,7 +81,7 @@ export default function Dashboard() {
         setdocumentation(data);
       }catch(error){
         console.error("Erro ao carregar documentação técnica:", error);
-        setdocumentation(null);
+        setdocumentation([]);
       }
       setLoadingDocs(false)
     }
@@ -89,6 +89,11 @@ export default function Dashboard() {
       loadDocumentacao();
     }
   },[showTechnicalDetails, selectedRecord]);
+
+  useEffect(() => {
+    console.log("selectedRecord =", selectedRecord);
+  }, [selectedRecord]);
+  
 
 
   return (
@@ -136,18 +141,26 @@ export default function Dashboard() {
                 <div className="detail-section">
                   <h4>Documentação Técnica</h4>
                   <div className="documentation-content">
-                    {loadingDocs ? (
-                      <p>Carregando documentação...</p>
-                    ): !documentation ?(
-                      <div className="no-doc">
-                        <button className="btn-add-doc">
-                          Criar Documentação
-                        </button>
-                      </div>
+                    {loadingDocs? (
+                      <div>Carregando documentação...</div>
+                    ): documentation?.length > 0 ? (
+                      documentation.map((doc,index) => (
+                        <div key={index}>
+                          <h5>{doc.DESCRICAO}</h5>
+                          <p><strong>ID do Registro:</strong> {doc.ID_REGISTRO}</p>
+                          <p><strong>Tabela:</strong> {doc.TABELA}</p>
+
+                          <p><strong>Funcionalidades:</strong> {doc.FUNCIONALIDADES}</p>
+                          <p><strong>Configurações: </strong> {doc.CONFIGURACOES}</p>
+                          <p><strong>ID Interno:</strong> {doc.ID}</p>
+
+                          <p><strong>Criado em:</strong> {doc.RECCREATEDON.split('T')[0]}</p>
+                          <p><strong>Modificado em:</strong> { doc.RECMODIFIEDON ? doc.RECMODIFIEDON.split('T')[0] : 'Nunca modificado'}</p>
+                        </div>
+                      ))
                     ):(
-                      <div className="doc-view">
-                        <p>mostra doc</p>
-                      </div>)}  
+                      <p>Nenhuma documentação encontrada.</p>
+                    )}
                   </div>
                 </div>
 

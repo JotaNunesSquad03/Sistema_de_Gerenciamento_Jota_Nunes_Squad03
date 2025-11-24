@@ -3,6 +3,7 @@ import {User,BookOpen,Search} from "lucide-react";
 export default function RecentRecords({ handleTechnicalDetails, records}) {
 
     const tableHeaders = [
+        "ID",
         "Descrição do Registro",
         "Usuário",
         "Origem",
@@ -34,6 +35,7 @@ export default function RecentRecords({ handleTechnicalDetails, records}) {
                             {records && records.length>0 ? (
                                 records.map((record,index)=>(
                                     <tr key={index}>
+                                        <td>{record.id}</td>
                                         <td>{record.descricao}</td>
                                         <td>
                                             <div className="user-info">
