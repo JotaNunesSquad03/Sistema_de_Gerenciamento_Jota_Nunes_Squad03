@@ -39,6 +39,7 @@ export const useDashboard = () => {
         setRecentRecords(recordsData);
       } catch (error) {
         console.error("Erro ao carregar dados do dashboard:", error);
+        toast.error("Erro ao carregar dados do dashboard. Tente novamente mais tarde.");
       } finally {
         setLoading(false);
       }
@@ -53,6 +54,7 @@ export const useDashboard = () => {
         setMetrics(updated);
       } catch (error) {
         console.error("Erro ao atualizar métricas do dashboard:", error);
+        toast.error("Erro ao atualizar métricas do dashboard. Tente novamente mais tarde.");
       }
     }, 5000);
 
@@ -140,13 +142,23 @@ export const useDashboard = () => {
     }
 
     if (messages.length > 0) {
-      messages.forEach((msg) => toast(msg));
+      messages.forEach((msg) =>
+        toast.custom(
+          <div className="custom-toast custom-toast--info">
+            <div className="custom-toast__icon">ℹ️</div>
+            <div className="custom-toast__body">
+              <div className="custom-toast__title">Atualização de métricas</div>
+              <div className="custom-toast__message">{msg}</div>
+            </div>
+          </div>
+        )
+      );
     }
 
     prevMetricsRef.current = JSON.parse(JSON.stringify(curr));
   }, [metrics]);
 
-  useEffect(() => {
+  useEffect(() => { 
     async function loadDocumentacao() {
       if (!selectedRecord) return;
       setLoadingDocs(true);
@@ -158,6 +170,7 @@ export const useDashboard = () => {
         setDocumentation(data);
       } catch (error) {
         console.error("Erro ao carregar documentação técnica:", error);
+        toast.error("Erro ao carregar documentação técnica. Tente novamente mais tarde.");
         setDocumentation([]);
       }
       setLoadingDocs(false);
