@@ -8,10 +8,6 @@ export const useDashboard = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [showTechnicalDetails, setShowTechnicalDetails] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
-  
-  const [observations, setObservations] = useState({});
-  const [newObservation, setNewObservation] = useState('');
-  const [editingObservation, setEditingObservation] = useState(null);
 
   const [metrics, setMetrics] = useState(null);
   const [recentRecords, setRecentRecords] = useState([]);
@@ -189,53 +185,10 @@ export const useDashboard = () => {
   const closeTechnicalDetails = () => {
     setShowTechnicalDetails(false);
     setSelectedRecord(null);
-    setNewObservation('');
-    setEditingObservation(null);
     setShowCreateDocForm(false);
   };
 
-  const addObservation = () => {
-    if (newObservation.trim() && selectedRecord) {
-      const recordId = selectedRecord.id;
-      const observation = {
-        id: Date.now(),
-        text: newObservation.trim(),
-        author: 'Equipe de Controle',
-        date: new Date().toLocaleString('pt-BR'),
-        type: 'observation'
-      };
-      
-      setObservations(prev => ({
-        ...prev,
-        [recordId]: [...(prev[recordId] || []), observation]
-      }));
-      setNewObservation('');
-    }
-  };
-
-  const editObservation = (observationId, newText) => {
-    if (selectedRecord) {
-      const recordId = selectedRecord.id;
-      setObservations(prev => ({
-        ...prev,
-        [recordId]: prev[recordId]?.map(obs => 
-          obs.id === observationId ? { ...obs, text: newText, date: new Date().toLocaleString('pt-BR') } : obs
-        ) || []
-      }));
-      setEditingObservation(null);
-    }
-  };
-
-  const deleteObservation = (observationId) => {
-    if (selectedRecord) {
-      const recordId = selectedRecord.id;
-      setObservations(prev => ({
-        ...prev,
-        [recordId]: prev[recordId]?.filter(obs => obs.id !== observationId) || []
-      }));
-    }
-  };
-
+ 
   const toggleFilter = () => {
     setShowFilter(!showFilter);
   };
@@ -358,13 +311,6 @@ export const useDashboard = () => {
     showTechnicalDetails,
     selectedRecord,
     
-    // Observations
-    observations,
-    newObservation,
-    editingObservation,
-    setNewObservation,
-    setEditingObservation,
-    
     // Dashboard data
     metrics,
     recentRecords,
@@ -381,11 +327,7 @@ export const useDashboard = () => {
     handleTechnicalDetails,
     closeTechnicalDetails,
     toggleFilter,
-    
-    // Handlers - Observations
-    addObservation,
-    editObservation,
-    deleteObservation,
+  
     
     // Handlers - Documentation
     handleDocChange,
