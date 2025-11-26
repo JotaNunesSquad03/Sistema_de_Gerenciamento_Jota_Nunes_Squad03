@@ -24,7 +24,7 @@ function Login() {
       <div className="right-side">
         <form className="form-container" onSubmit={handleSubmit}>
           <h2>Bem vindo ao</h2>
-          <h1>Sistema de Gerenciamento</h1>
+          <h1>LiveLog</h1>
 
           {error && <p className="error-message">{error}</p>}
 

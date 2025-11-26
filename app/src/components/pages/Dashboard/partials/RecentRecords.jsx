@@ -16,12 +16,6 @@ export default function RecentRecords({ handleTechnicalDetails, records}) {
             <div className="table-container">
                 <div className="table-header">
                     <h2>Últimos registros criados</h2>
-                    <div className="search-bar">
-                        <div className="search-input">
-                            <Search className="search-icon"/>
-                            <input type="text" placeholder="Buscar registros" className="search-field"/>
-                        </div>
-                    </div>
                 </div>
                 <table className="registros-table">
                     <thead>

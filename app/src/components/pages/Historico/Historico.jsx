@@ -42,9 +42,6 @@ export default function Historico() {
     tipoFilter,
     showTechnicalDetails,
     selectedRecord,
-    observations,
-    newObservation,
-    editingObservation,
     filteredData,
     totalPages,
     startIndex,
@@ -61,20 +58,17 @@ export default function Historico() {
     setShowFilter,
     setStatusFilter,
     setTipoFilter,
-    setNewObservation,
-    setEditingObservation,
     goToPage,
     goToPreviousPage,
     goToNextPage,
     handleTechnicalDetails,
     closeTechnicalDetails,
-    addObservation,
-    editObservation,
-    deleteObservation,
     // Documentation handlers
     handleDocChange,
     handleCreateDocumentation,
     handleDeleteDocumentation,
+    tabelaFilter,
+    setTabelaFilter,
   } = useHistorico(historyTable);
 
   return (
@@ -88,17 +82,14 @@ export default function Historico() {
         <div className="table-header">
           <h2>Registros de Alterações</h2>
           <div className="search-bar">
-            <div className="search-input">
-              <Search className="search-icon" />
-              <input 
-                type="text" 
-                placeholder="Filtrar" 
-                className="search-field"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
+            <select className="filter-select" value={tabelaFilter} onChange={(e)=>setTabelaFilter(e.target.value)}>
+              <option value=''>Todas as Tabelas</option>
+              <option value="AUD_SQL">AUD_SQL</option>
+              <option value="AUD_FV">AUD_FV</option>
+              <option value="AUD_REPORT">AUD_REPORT</option>
+            </select>
           </div>
+
         </div>
         
         <HistoricoTable 

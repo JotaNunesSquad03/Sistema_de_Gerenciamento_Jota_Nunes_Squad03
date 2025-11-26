@@ -5,11 +5,16 @@ import { getDocumentation, createDocumentation, deleteDocumentation } from "../s
 export function useHistorico(apiData = []) {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [tabelaFilter, setTabelaFilter] = useState("");
+
   const [showFilter, setShowFilter] = useState(false);
   const [statusFilter, setStatusFilter] = useState("TODOS");
   const [tipoFilter, setTipoFilter] = useState("TODOS");
   const [showTechnicalDetails, setShowTechnicalDetails] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
+
+  
   
   // Estados de documentação
   const [documentation, setDocumentation] = useState(null);
@@ -29,15 +34,19 @@ export function useHistorico(apiData = []) {
   const sourceData = Array.isArray(apiData) ? apiData : []
 
   const filteredData = useMemo(() => {
-    return sourceData.filter(item => {
-      const matchesSearch = item.descricao?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.usuario?.toLowerCase().includes(searchTerm.toLowerCase());
-      
+    return sourceData.filter((item) => {
+      const matchesSearch =
+        item.descricao?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.usuario?.toLowerCase().includes(searchTerm.toLowerCase());
+
       const matchesTipo = tipoFilter === "TODOS" || item.origem === tipoFilter;
-      
-      return matchesSearch && matchesTipo;
+
+      // NOVO: filtro por tabela
+      const matchesTabela = tabelaFilter === "" || item.origem === tabelaFilter;
+
+      return matchesSearch && matchesTipo && matchesTabela;
     });
-  }, [searchTerm, tipoFilter, sourceData]);
+  }, [searchTerm, tipoFilter, tabelaFilter, sourceData]);
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -253,5 +262,7 @@ export function useHistorico(apiData = []) {
     handleDocChange,
     handleCreateDocumentation,
     handleDeleteDocumentation,
+    tabelaFilter,
+    setTabelaFilter,
   };
 }
