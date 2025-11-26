@@ -5,22 +5,18 @@ import { getRecentRecords } from "../services/recentRecords";
 import { getDocumentation, createDocumentation, deleteDocumentation } from "../services/documentationService";
 
 export const useDashboard = () => {
-  // Estados de UI
   const [showFilter, setShowFilter] = useState(false);
   const [showTechnicalDetails, setShowTechnicalDetails] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   
-  // Estados de observações
   const [observations, setObservations] = useState({});
   const [newObservation, setNewObservation] = useState('');
   const [editingObservation, setEditingObservation] = useState(null);
 
-  // Estados de dados do dashboard
   const [metrics, setMetrics] = useState(null);
   const [recentRecords, setRecentRecords] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Estados de documentação
   const [documentation, setDocumentation] = useState(null);
   const [loadingDocs, setLoadingDocs] = useState(true);
   const [showCreateDocForm, setShowCreateDocForm] = useState(false);
@@ -33,10 +29,8 @@ export const useDashboard = () => {
     OBSERVACAO: "",
   });
 
-  // Ref para métricas anteriores (para comparação)
   const prevMetricsRef = useRef(null);
 
-  // Carregar dados iniciais
   useEffect(() => {
     async function loadData() {
       try {
@@ -56,7 +50,6 @@ export const useDashboard = () => {
     loadData();
   }, []);
 
-  // Atualizar métricas a cada 5 segundos
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
@@ -84,7 +77,7 @@ export const useDashboard = () => {
     const curr = metrics;
     const messages = [];
 
-    // Totais
+
     if (prev.totais.fv !== curr.totais.fv) {
       const diff = curr.totais.fv - prev.totais.fv;
       messages.push(`FV total: ${diff > 0 ? "+" + diff : diff}`);
@@ -100,7 +93,6 @@ export const useDashboard = () => {
       messages.push(`Report total: ${diff > 0 ? "+" + diff : diff}`);
     }
 
-    // Novos (últimos 30 dias)
     const novosPrev = prev.ultimos_30_dias.novos;
     const novosCurr = curr.ultimos_30_dias.novos;
 
@@ -116,7 +108,6 @@ export const useDashboard = () => {
       messages.push(`Report: ${novosCurr.report} novos documentos`);
     }
 
-    // Alterados (últimos 30 dias)
     const altPrev = prev.ultimos_30_dias.alterados;
     const altCurr = curr.ultimos_30_dias.alterados;
 
@@ -132,7 +123,7 @@ export const useDashboard = () => {
       messages.push(`Report: ${altCurr.report} documentos alterados`);
     }
 
-    // Sem documentação
+
     const semPrev = prev.sem_documentacao;
     const semCurr = curr.sem_documentacao;
 
@@ -148,16 +139,13 @@ export const useDashboard = () => {
       messages.push(`Report sem documentação: ${semCurr.report}`);
     }
 
-    // Exibir toasts
     if (messages.length > 0) {
       messages.forEach((msg) => toast(msg));
     }
 
-    // Atualizar métricas anteriores
     prevMetricsRef.current = JSON.parse(JSON.stringify(curr));
   }, [metrics]);
 
-  // Carregar documentação quando abrir detalhes técnicos
   useEffect(() => {
     async function loadDocumentacao() {
       if (!selectedRecord) return;
@@ -179,7 +167,6 @@ export const useDashboard = () => {
     }
   }, [showTechnicalDetails, selectedRecord]);
 
-  // Preencher formulário quando abrir detalhes técnicos
   useEffect(() => {
     if (showTechnicalDetails && selectedRecord) {
       setDocForm((prev) => ({
@@ -190,7 +177,6 @@ export const useDashboard = () => {
     }
   }, [showTechnicalDetails, selectedRecord]);
 
-  // Handlers de observações
   const handleTechnicalDetails = (record) => {
     setSelectedRecord(record);
     setShowTechnicalDetails(true);
@@ -250,7 +236,6 @@ export const useDashboard = () => {
     setShowFilter(!showFilter);
   };
 
-  // Handlers de documentação
   const handleDocChange = (e) => {
     setDocForm({
       ...docForm,
@@ -259,13 +244,11 @@ export const useDashboard = () => {
   };
 
   const handleCreateDocumentation = async () => {
-    // Validação: verificar se selectedRecord existe
     if (!selectedRecord) {
       toast.error("Nenhum registro selecionado. Por favor, selecione um registro primeiro.");
       return;
     }
 
-    // Validação: verificar se os campos obrigatórios estão preenchidos
     if (!docForm.DESCRICAO.trim()) {
       toast.error("O campo Descrição é obrigatório!");
       return;
@@ -281,7 +264,6 @@ export const useDashboard = () => {
       return;
     }
 
-    // Validação: verificar se TABELA e ID_REGISTRO estão preenchidos
     if (!docForm.TABELA || !docForm.ID_REGISTRO) {
       toast.error("Erro: Tabela ou ID do registro não encontrado. Por favor, feche e abra novamente os detalhes técnicos.");
       return;
@@ -309,11 +291,9 @@ export const useDashboard = () => {
     } catch (error) {
       console.error("Erro ao criar documentação técnica:", error);
       
-      // Tratamento de erro mais detalhado
       let errorMessage = "Erro ao criar documentação técnica. ";
       
       if (error.response) {
-        // Erro da API
         if (error.response.status === 401) {
           errorMessage += "Você não está autenticado. Por favor, faça login novamente.";
         } else if (error.response.status === 403) {
@@ -326,16 +306,27 @@ export const useDashboard = () => {
           errorMessage += error.response.data?.message || `Erro ${error.response.status}: ${error.response.statusText}`;
         }
       } else if (error.request) {
-        // Requisição foi feita mas não houve resposta
         errorMessage += "Não foi possível conectar ao servidor. Verifique sua conexão com a internet.";
       } else {
-        // Erro ao configurar a requisição
         errorMessage += error.message || "Erro desconhecido.";
       }
       
       toast.error(errorMessage);
     }
   };
+
+  useEffect(() => {
+  if (!selectedRecord) return;
+
+  setDocForm({
+    TABELA: selectedRecord.origem,
+    ID_REGISTRO: selectedRecord.id,
+    DESCRICAO: "",
+    FUNCIONALIDADES: "",
+    CONFIGURACOES: "",
+    OBSERVACAO: "",
+  });
+}, [selectedRecord]);
 
   const handleDeleteDocumentation = async (docID) => {
     const confirmDelete = window.confirm("Tem certeza que deseja excluir esta documentação técnica?");
