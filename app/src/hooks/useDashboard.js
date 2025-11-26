@@ -123,6 +123,10 @@ export const useDashboard = () => {
       messages.push(`Report: ${altCurr.report} documentos alterados`);
     }
 
+    console.log("Prev:", prevMetricsRef.current);
+    console.log("Curr:", metrics);
+    console.log("Mensagens geradas:", messages);
+
 
     const semPrev = prev.sem_documentacao;
     const semCurr = curr.sem_documentacao;
