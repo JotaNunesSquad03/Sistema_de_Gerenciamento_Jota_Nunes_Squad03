@@ -22,7 +22,8 @@ function Login() {
       </div>
 
       <div className="right-side">
-        <form className="form-container" onSubmit={handleSubmit}>
+        {/* IMPORTANTE: passando o evento para handleSubmit */}
+        <form className="form-container" onSubmit={(e) => handleSubmit(e)}>
           <h2>Bem vindo ao</h2>
           <h1>Sistema de Gerenciamento</h1>
 

@@ -1,22 +1,34 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../services/api";
+import axios from "axios";
 
-export const useLogin = () => {
-  const navigate = useNavigate();
-
+export function useLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/dashboard");
-  };
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const response = await axios.post("http://localhost:8000/auth/login", {
+        email: email,
+        senha: password, // Mesmo nome esperado pela API
+      });
+
+      // Salvar token
+      localStorage.setItem("token", response.data.access_token);
+
+      // Redirecionar
+      window.location.href = "/dashboard";
+    } catch (err) {
+      setError("Email ou senha incorretos.");
+    }
   };
 
   return {
@@ -25,9 +37,8 @@ export const useLogin = () => {
     password,
     setPassword,
     showPassword,
-    error,
-    setError,
-    handleSubmit,
     togglePasswordVisibility,
+    error,
+    handleSubmit,
   };
-};
+}
