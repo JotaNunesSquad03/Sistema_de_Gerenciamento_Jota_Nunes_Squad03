@@ -5,9 +5,14 @@ import Historico from "./components/pages/Historico/Historico";
 import Settings from "./components/pages/Settings";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import DependenciasPage from "./components/pages/DependenciasPage";
+import {Toaster} from 'react-hot-toast';
+import './index.css';
 
 export default function App() {
   return (
+    <>
+    <Toaster position="top-right" reverseOrder={false}/>
+
     <Routes>
       <Route path="/" element={<Login />} />
 
@@ -19,5 +24,6 @@ export default function App() {
         <Route path="/configurações" element={<Settings />} />
       </Route>
     </Routes>
+    </>
   );
 }
