@@ -1564,3 +1564,131 @@
       font-weight: 500;
     }
   }
+  //create documentation button
+  .btn-secondary {
+  background: #e5e5e5;
+  color: #333;
+  padding: 10px 16px;
+  margin-bottom: 10px;
+
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  &:hover {
+    background: #d6d6d6;
+    border-color: #b9b9b9;
+  }
+
+  &:active {
+    background: #c8c8c8;
+    border-color: #a9a9a9;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  //button add observation
+}
+  .btn-add-observation {
+  background: #e5e5e5;
+  color: #333;
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: #d6d6d6;
+    border-color: #b9b9b9;
+  }
+
+  &:active {
+    background: #c8c8c8;
+    border-color: #a9a9a9;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+
+ //input create documentation
+  .input-doc {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+
+  background: #f7f7f7;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+
+  font-size: 14px;
+  color: #333;
+
+  transition: all 0.2s ease-in-out;
+
+  &:focus {
+    outline: none;
+    border-color: #c53030; 
+    box-shadow: 0 0 0 2px rgba(197, 48, 48, 0.2);
+    background: #fff;
+  }
+
+  &::placeholder {
+    color: #999;
+  }
+}
+
+
+textarea.input-doc {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.btn-delete {
+  background-color: #ff4d4d;
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  font-size: 14px;
+}
+
+.btn-delete:hover {
+  background-color: #e04343;
+}
+
+.btn-delete:active {
+  transform: scale(0.95);
+}
+
+.btn-delete svg {
+  width: 16px;
+  height: 16px;
+}

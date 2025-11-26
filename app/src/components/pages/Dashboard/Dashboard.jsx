@@ -1,21 +1,5 @@
 import "./Dashboard.scss";
-import { 
-  Search,
-  BarChart3,
-  User,
-  AlertTriangle,
-  Users,
-  Filter,
-  Edit,
-  Eye,
-  Bell,
-  Trash2,
-  BookOpen,
-  X,
-  Plus,
-  MessageSquare,
-  Check,
-  Activity
+import { Search,BarChart3, User, AlertTriangle,Users,Filter,Edit,Eye,Bell,Trash2,BookOpen,X,Plus,MessageSquare,Check,Activity
 } from "lucide-react";
 import { useDashboard } from "../../../hooks/useDashboard";
 import {useEffect, useState} from "react";
@@ -26,6 +10,8 @@ import RecentChanges from "./partials/RecentChanges";
 import { getDashboardMetrics } from "../../../services/dashboardService";
 import { getRecentRecords } from "../../../services/recentRecords";
 import { getDocumentation } from "../../../services/documentationService";
+import { createDocumentation } from "../../../services/documentationService";
+import { deleteDocumentation } from "../../../services/documentationService";
 
 export default function Dashboard() {
   const {
@@ -50,6 +36,15 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [documentation, setdocumentation] =useState(null)
   const [loadingDocs, setLoadingDocs] = useState(true);
+  const [showCreateDocForm, setShowCreateDocForm] = useState(false);
+  const [docForm, setDocForm] = useState({
+    TABELA: "",
+    ID_REGISTRO: "",
+    DESCRICAO: "",
+    FUNCIONALIDADES: "",
+    CONFIGURACOES: "",
+    OBSERVACAO: "",
+});
 
   useEffect(()=>{
     async function loadData(){
@@ -93,8 +88,87 @@ export default function Dashboard() {
   useEffect(() => {
     console.log("selectedRecord =", selectedRecord);
   }, [selectedRecord]);
-  
 
+  //fill form fields when opening technical details
+  useEffect(()=>{
+    if(showTechnicalDetails && selectedRecord){
+      setDocForm((prev)=>({
+        ...prev,
+        TABELA: selectedRecord.origem,
+        ID_REGISTRO: selectedRecord.id
+      }))
+    }
+  },[showTechnicalDetails, selectedRecord]);
+
+  const handleDocChange = (e) =>{
+    setDocForm({
+      ...docForm,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleCreateDocumentation = async () =>{
+       // validation to ensure required fields are filled
+      if (!docForm.DESCRICAO.trim()) {
+        alert("O campo Descrição é obrigatório!");
+        return;
+      }
+
+      if (!docForm.FUNCIONALIDADES.trim()) {
+        alert("O campo Funcionalidades é obrigatório!");
+        return;
+      }
+
+      if (!docForm.CONFIGURACOES.trim()) {
+        alert("O campo Configurações é obrigatório!");
+        return;
+      }
+
+      try{
+        await createDocumentation(docForm);
+        alert("Documentação técnica criada com sucesso!");
+
+        setShowCreateDocForm(false);
+
+        const data = await getDocumentation(
+          selectedRecord.origem,
+          selectedRecord.id
+        )
+        setdocumentation(data);
+
+        setDocForm((prev) => ({
+        ...prev,
+        DESCRICAO: "",
+        FUNCIONALIDADES: "",
+        CONFIGURACOES: "",
+        OBSERVACAO: "",
+      }));
+
+      } catch(error){
+        console.error("Erro ao criar documentação técnica:", error);
+      }
+  }
+
+  const handleDeleteDocumentation = async (docID) =>{
+    const confirmDelete = confirm("Tem certeza que deseja excluir esta documentação técnica?");
+    if(!confirmDelete) return;
+
+    try{
+      await deleteDocumentation(docID)
+      alert("Documentação técnica excluída com sucesso!");
+
+      const updatedDocs = await getDocumentation(
+      selectedRecord.origem,
+      selectedRecord.id
+    );
+
+    setdocumentation(updatedDocs);
+    }catch(error){
+      console.error("Erro ao excluir documentação técnica:", error);
+      alert("Erro ao excluir documentação técnica. Tente novamente mais tarde.");
+    }
+  }
+  
 
   return (
     <div className="dashboard-page">
@@ -120,7 +194,11 @@ export default function Dashboard() {
                   <h4>Informações do Registro</h4>
                   <div className="detail-grid">
                     <div className="detail-item">
-                      <span className="detail-label">Nome:</span>
+                      <span className="detail-label">Id do registro:</span>
+                      <span className="detail-value">{selectedRecord?.id}</span>
+                    </div>
+                    <div className="detail-item">
+                      <span className="detail-label">Descrição:</span>
                       <span className="detail-value">{selectedRecord?.descricao}</span>
                     </div>
                     <div className="detail-item">
@@ -140,22 +218,73 @@ export default function Dashboard() {
 
                 <div className="detail-section">
                   <h4>Documentação Técnica</h4>
+
+                  {documentation?.length > 0 ? (
+                    <button className="btn-secondary" disabled>
+                    <Plus size={16} />
+                    Criar Documentação 
+                  </button>
+                  ):(
+                    <button className="btn-secondary" onClick={()=>setShowCreateDocForm(!showCreateDocForm)}>
+                    <Plus size={16} />
+                    Criar Documentação 
+                  </button>
+                  )}
+
+                  {showCreateDocForm && (
+                    <div>
+                      <input 
+                      className="input-doc"
+                      name='DESCRICAO'
+                      placeholder="Descrição"
+                      value={docForm.DESCRICAO}
+                      onChange={handleDocChange}/>
+                      <input
+                      className="input-doc"
+                      name='FUNCIONALIDADES'
+                      placeholder="Funcionalidades"
+                      value={docForm.FUNCIONALIDADES}
+                      onChange={handleDocChange}/>
+                      <input
+                      className="input-doc"
+                      name='CONFIGURACOES'
+                      placeholder="Configurações"
+                      value={docForm.CONFIGURACOES}
+                      onChange={handleDocChange}
+                      />
+                      <textarea
+                      className="input-doc"
+                      name="OBSERVACAO"
+                      placeholder="Observação"
+                      value={docForm.OBSERVACAO}
+                      onChange={handleDocChange}/>
+
+                      <button onClick={handleCreateDocumentation} className="btn-add-observation">
+                          Salvar Documentação
+                      </button>
+                    </div>
+                  )}
+
+
                   <div className="documentation-content">
                     {loadingDocs? (
                       <div>Carregando documentação...</div>
                     ): documentation?.length > 0 ? (
                       documentation.map((doc,index) => (
                         <div key={index}>
-                          <h5>{doc.DESCRICAO}</h5>
                           <p><strong>ID do Registro:</strong> {doc.ID_REGISTRO}</p>
                           <p><strong>Tabela:</strong> {doc.TABELA}</p>
-
+                          <p><strong>Descrição:</strong> {doc.DESCRICAO}</p>
                           <p><strong>Funcionalidades:</strong> {doc.FUNCIONALIDADES}</p>
                           <p><strong>Configurações: </strong> {doc.CONFIGURACOES}</p>
                           <p><strong>ID Interno:</strong> {doc.ID}</p>
 
                           <p><strong>Criado em:</strong> {doc.RECCREATEDON.split('T')[0]}</p>
                           <p><strong>Modificado em:</strong> { doc.RECMODIFIEDON ? doc.RECMODIFIEDON.split('T')[0] : 'Nunca modificado'}</p>
+
+                          <button className="btn-delete" onClick={()=> handleDeleteDocumentation(doc.ID)}>
+                            <Trash2 size={16} />Deletar Documentação
+                          </button>
                         </div>
                       ))
                     ):(
