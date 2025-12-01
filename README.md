@@ -1,20 +1,11 @@
-# Portal_Sistema_de_Gerenciamento_Jota_Nunes_Squad03const handleSubmit = async (e) => {
-    e.preventDefault(); // evita reload da página
-    setError(""); // limpa erros anteriores
+Executando o Front-end (Interface Web)
 
-    try {
-      // chamada à API de login
-      const res = await api.post("/auth/login", { email, password });
+Clonar o repositório:
+https://github.com/JotaNunesSquad03/Sistema_de_Gerenciamento_Jota_Nunes_Squad03.git 
 
-      // salva token no localStorage para autenticação futura
-      localStorage.setItem("token", res.data.token);
+Acessar a pasta do projeto: 
+cd Sistema_de_Gerenciamento_Jota_Nunes_Squad03
 
-      // redireciona para o dashboard
-      navigate("/dashboard");
-    } catch (err) {
-      // exibe mensagem de erro em caso de login inválido
-      setError("Usuário ou senha inválidos");
-    }
-  };
-
-  Axios para adicionar endpoint depois.
+Instalar e rodar: 
+npm install
+npm run dev (Acesse via http://localhost:5173)
