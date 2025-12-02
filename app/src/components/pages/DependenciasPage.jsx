@@ -5,7 +5,6 @@ import { faDownload, faTimes } from '@fortawesome/free-solid-svg-icons';
 // Caminhos corrigidos para a estrutura do projeto principal
 import { dependencyData, riskRelations } from '../../data/mockData';
 import Filters from './dependencias/Filters';
-import DependencyGraph from './dependencias/DependencyGraph';
 import RiskTable from './dependencias/RiskTable';
 import NodeDetailsPanel from './dependencias/NodeDetailsPanel';
 
@@ -98,20 +97,6 @@ export default function DependenciasPage() {
         </div>
       </div>
       <Filters filterValues={filters} onFilterChange={handleFilterChange} />
-      <div className="bg-white shadow rounded-lg">
-        <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">Visualização Gráfica de Dependências</h3>
-        </div>
-        <div className="p-6">
-          <DependencyGraph
-            nodes={filteredData.nodes}
-            edges={filteredData.edges}
-            onNodeClick={handleNodeClick}
-            focusedNodes={focusedNodes}
-            impactedPath={impactedPath}
-          />
-        </div>
-      </div>
       <RiskTable
         relations={filteredData.risks}
         onFocusRelation={handleFocusRelation}

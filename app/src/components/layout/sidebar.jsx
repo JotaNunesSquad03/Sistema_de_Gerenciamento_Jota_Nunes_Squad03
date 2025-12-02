@@ -1,15 +1,12 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-// CORREÇÃO 1: Removido o prefixo "Lu" dos nomes dos ícones na importação
 import { LogOut, LayoutDashboard, Clock3, Boxes, Settings } from 'lucide-react';
 import Logo from '../../assets/logo-jotanunes.png';
 import './sidebar.scss'; 
 
 const MENU_ITEMS = [
-  // CORREÇÃO 2: Removido o prefixo "Lu" do uso dos ícones
   { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard />, path: "/dashboard" },
   { id: "historico", label: "Histórico de Alterações", icon: <Clock3 />, path: "/historico" },
   { id: "dependencias", label: "Dependências", icon: <Boxes />, path: "/dependencias" },
-  { id: "configurações", label: "Configurações", icon: <Settings />, path: "/configurações" },
 ];
 
 const Sidebar = ({ className }) => {
