@@ -3,7 +3,7 @@ import Login from "./components/pages/Login/Login";
 import Dashboard from "./components/pages/Dashboard/Dashboard";
 import Historico from "./components/pages/Historico/Historico";
 import DashboardLayout from "./components/layout/DashboardLayout";
-import DependenciasPage from "./components/pages/DependenciasPage";
+import DependenciasPage from "./components/pages/Dependencias/DependenciasPage";
 import {Toaster} from 'react-hot-toast';
 import './index.css';
 
