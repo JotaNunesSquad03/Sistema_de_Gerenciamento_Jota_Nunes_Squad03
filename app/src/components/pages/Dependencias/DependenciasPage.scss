@@ -1,0 +1,144 @@
+.dependencias-page {
+  padding: 24px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background: #A42828;
+      border: none;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.2s;
+
+    }
+  }
+
+  .list-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+
+    .empty {
+      color: #666;
+      font-size: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      thead {
+        background: #f5f5f5;
+
+        th {
+          padding: 10px 8px;
+          text-align: left;
+          font-size: 14px;
+          border-bottom: 1px solid #ddd;
+        }
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid #eee;
+
+          td {
+            padding: 10px 8px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  /* ============= MODAL ============= */
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal {
+    width: 380px;
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      label {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      input {
+        border: 1px solid #ccc;
+        padding: 8px;
+        border-radius: 5px;
+        font-size: 14px;
+
+        &:focus {
+          outline: none;
+          border-color: #2563eb;
+        }
+      }
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+
+      .btn-secondary {
+        background: #e5e7eb;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+
+        &:hover {
+          background: #d1d5db;
+        }
+      }
+
+      .btn-primary {
+        background: #A42828;
+        color: #fff;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+
+      }
+    }
+  }
+}
