@@ -144,6 +144,8 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     overflow-x: auto;
     overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
 
     .table-header {
       display: flex;
@@ -177,9 +179,11 @@
     .historico-table {
       width: 100%;
       border-collapse: collapse;
+      display: table;
 
       thead {
         background-color: #f8fafc;
+        display: table-header-group;
 
         th {
           padding: 16px 24px;
@@ -189,6 +193,7 @@
           color: #374151;
           border-bottom: 1px solid #e5e7eb;
           white-space: nowrap;
+          position: relative;
 
           &:first-child {
             padding-left: 24px;
@@ -201,9 +206,12 @@
       }
 
       tbody {
+        display: table-row-group;
+
         tr {
           border-bottom: 1px solid #f1f5f9;
           transition: background-color 0.2s ease;
+          display: table-row;
 
           &:hover {
             background-color: #f8fafc;
@@ -218,6 +226,7 @@
             font-size: 14px;
             color: #374151;
             vertical-align: middle;
+            display: table-cell;
 
             &:first-child {
               padding-left: 24px;
@@ -226,23 +235,61 @@
             &:last-child {
               padding-right: 24px;
             }
-          }
 
-          .nome-cell {
-            font-weight: 500;
-            color: #1e293b;
-            max-width: 200px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
+            // Quebra de linha em telas pequenas para descrição
+            &:nth-child(2) {
+              max-width: 300px;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
+            }
 
-          .descricao-cell {
-            max-width: 300px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            color: #64748b;
+            // Estilos específicos para células com classes
+            &.id-cell {
+              font-weight: 600;
+              color: #1e293b;
+              min-width: 80px;
+              white-space: nowrap;
+            }
+
+            &.nome-cell {
+              font-weight: 500;
+              color: #1e293b;
+              max-width: 200px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+
+            &.descricao-cell {
+              max-width: 300px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              color: #64748b;
+              word-wrap: break-word;
+              word-break: break-word;
+            }
+
+            &.user-cell {
+              min-width: 150px;
+            }
+
+            &.origem-cell {
+              min-width: 100px;
+              white-space: nowrap;
+              font-weight: 500;
+              color: #374151;
+            }
+
+            &.data-cell {
+              min-width: 110px;
+              white-space: nowrap;
+              color: #64748b;
+            }
+
+            &.action-cell {
+              min-width: 60px;
+              text-align: center;
+            }
           }
 
           .user-info {
@@ -479,6 +526,39 @@
   }
 }
 
+@media (max-width: 992px) {
+  .historico-page {
+    .table-container {
+      .table-header {
+        flex-wrap: wrap;
+        gap: 12px;
+
+        h2 {
+          font-size: 1.3rem;
+        }
+
+        .search-bar {
+          .search-input {
+            max-width: 100%;
+          }
+        }
+      }
+
+      .historico-table {
+        thead th,
+        tbody td {
+          padding: 12px 16px;
+          font-size: 13px;
+        }
+
+        tbody td:nth-child(2) {
+          max-width: 250px;
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .historico-page {
     padding: 12px;
@@ -517,6 +597,35 @@
       border-radius: 8px;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      position: relative;
+
+      // Indicador de scroll horizontal
+      &::before {
+        content: '← Deslize para ver mais →';
+        position: absolute;
+        bottom: 10px;
+        right: 20px;
+        font-size: 11px;
+        color: #64748b;
+        pointer-events: none;
+        opacity: 1;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 30px;
+        background: linear-gradient(to left, rgba(255, 255, 255, 0.9), transparent);
+        pointer-events: none;
+        z-index: 1;
+      }
 
       .table-header {
         flex-direction: column;
@@ -539,54 +648,98 @@
 
       .historico-table {
         font-size: 12px;
-        min-width: 600px;
+        min-width: 700px;
+        display: table;
 
-        thead th,
-        tbody td {
-          padding: 10px 8px;
-          white-space: nowrap;
+        thead {
+          display: table-header-group;
 
-          &:first-child {
-            padding-left: 12px;
+          th {
+            padding: 10px 12px;
+            font-size: 11px;
+            white-space: nowrap;
             position: sticky;
-            left: 0;
+            top: 0;
+            z-index: 2;
             background-color: #f8fafc;
-            z-index: 1;
+
+            &:first-child {
+              padding-left: 12px;
+              position: sticky;
+              left: 0;
+              z-index: 3;
+            }
           }
+        }
 
-          &:last-child {
-            padding-right: 12px;
+        tbody {
+          display: table-row-group;
+
+          tr {
+            display: table-row;
+
+            td {
+              padding: 10px 12px;
+              font-size: 12px;
+              white-space: normal;
+              word-wrap: break-word;
+
+              &:first-child {
+                padding-left: 12px;
+                position: sticky;
+                left: 0;
+                background-color: white;
+                z-index: 1;
+                font-weight: 600;
+                min-width: 60px;
+              }
+
+              &:nth-child(2) {
+                max-width: 200px;
+                min-width: 150px;
+              }
+
+              &:last-child {
+                padding-right: 12px;
+                position: sticky;
+                right: 0;
+                background-color: white;
+                z-index: 1;
+              }
+            }
+
+            &:hover td:first-child,
+            &:hover td:last-child {
+              background-color: #f8fafc;
+            }
           }
         }
 
-        thead th:first-child {
-          background-color: #f8fafc;
-        }
-
-        tbody tr:hover td:first-child {
-          background-color: #f8fafc;
-        }
-
-        .nome-cell,
-        .descricao-cell {
-          max-width: 120px;
+        td.nome-cell,
+        td.descricao-cell {
+          max-width: 150px;
+          white-space: normal;
+          word-wrap: break-word;
         }
 
         .user-info {
-          gap: 8px;
+          gap: 6px;
+          flex-wrap: wrap;
 
           .user-avatar {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
 
             svg {
-              width: 14px;
-              height: 14px;
+              width: 12px;
+              height: 12px;
             }
           }
 
           span {
-            font-size: 12px;
+            font-size: 11px;
+            white-space: nowrap;
           }
         }
 
@@ -594,6 +747,7 @@
           .action-icon {
             width: 18px;
             height: 18px;
+            flex-shrink: 0;
           }
         }
       }
@@ -663,44 +817,106 @@
     }
 
     .table-container {
+      border-radius: 6px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
       .table-header {
         padding: 12px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
 
         h2 {
           font-size: 1.1rem;
+        }
+
+        .search-bar {
+          width: 100%;
+
+          .filter-select {
+            width: 100%;
+            margin-left: 0;
+            margin-top: 8px;
+          }
         }
       }
 
       .historico-table {
         font-size: 11px;
-        min-width: 500px;
+        min-width: 650px;
 
-        thead th,
-        tbody td {
-          padding: 8px 6px;
+        thead {
+          th {
+            padding: 8px 8px;
+            font-size: 10px;
+            font-weight: 700;
 
-          &:first-child {
-            padding-left: 8px;
+            &:first-child {
+              padding-left: 8px;
+              min-width: 50px;
+            }
           }
+        }
 
-          &:last-child {
-            padding-right: 8px;
+        tbody {
+          tr {
+            td {
+              padding: 10px 8px;
+              font-size: 11px;
+
+              &:first-child {
+                padding-left: 8px;
+                min-width: 50px;
+                font-size: 10px;
+              }
+
+              &:nth-child(2) {
+                max-width: 180px;
+                min-width: 120px;
+                font-size: 11px;
+              }
+
+              &:nth-child(3),
+              &:nth-child(4),
+              &:nth-child(5) {
+                font-size: 10px;
+                white-space: nowrap;
+              }
+
+              &:last-child {
+                padding-right: 8px;
+                min-width: 40px;
+              }
+            }
           }
         }
 
         .user-info {
+          gap: 4px;
+
           .user-avatar {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
 
             svg {
-              width: 12px;
-              height: 12px;
+              width: 10px;
+              height: 10px;
             }
           }
 
           span {
-            font-size: 11px;
+            font-size: 10px;
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+
+        .action-icons {
+          .action-icon {
+            width: 16px;
+            height: 16px;
           }
         }
       }
@@ -708,11 +924,26 @@
 
     .pagination {
       padding: 10px;
+      flex-direction: column;
+      gap: 10px;
+
+      .pagination-info {
+        font-size: 12px;
+        text-align: center;
+      }
 
       .pagination-controls {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 4px;
+
         .pagination-btn {
-          padding: 5px 10px;
-          font-size: 12px;
+          padding: 6px 10px;
+          font-size: 11px;
+          flex: 1;
+          min-width: 80px;
+          justify-content: center;
 
           svg {
             width: 12px;
@@ -721,10 +952,20 @@
         }
 
         .page-numbers {
+          margin: 0 2px;
+          gap: 2px;
+          flex-wrap: wrap;
+          justify-content: center;
+
           .page-number {
             width: 28px;
             height: 28px;
-            font-size: 11px;
+            font-size: 10px;
+          }
+
+          .page-ellipsis {
+            padding: 0 2px;
+            font-size: 10px;
           }
         }
       }

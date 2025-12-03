@@ -29,19 +29,19 @@ export default function HistoricoTable({
                 {data && data.length > 0 ? (
                     data.map((item, index) => (
                         <tr key={item.id || index}>
-                            <td>{item.id ? item.id : 'Sem ID'}</td>
-                            <td>{item.descricao}</td>
-                            <td>
+                            <td className="id-cell">{item.id ? item.id : 'Sem ID'}</td>
+                            <td className="descricao-cell">{item.descricao || 'Sem descrição'}</td>
+                            <td className="user-cell">
                                 <div className="user-info">
                                     <div className="user-avatar">
                                         <User />
                                     </div>
-                                    <span>{item.usuario}</span>
+                                    <span>{item.usuario || 'N/A'}</span>
                                 </div>
                             </td>
-                            <td>{item.origem}</td>
-                            <td>{item.data?.split('T')[0] ? item.data?.split('T')[0] : 'Sem data'}</td>
-                            <td>
+                            <td className="origem-cell">{item.origem || 'N/A'}</td>
+                            <td className="data-cell">{item.data?.split('T')[0] ? item.data?.split('T')[0] : 'Sem data'}</td>
+                            <td className="action-cell">
                                 <div className="action-icons">
                                     <BookOpen 
                                         className="action-icon" 
