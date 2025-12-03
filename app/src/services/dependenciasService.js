@@ -10,3 +10,11 @@ export const createDependencia = async (payload) =>{
     return response.data;
 }
 
+export const getDependenciasRegistro = async (tabela,id) => {
+    const response = await api.get(`/dependencias/registro/${tabela}/${id}`)
+    return response.data;
+}
+export const createDependenciaRegistro = async (data) => {
+    const response = await api.post('/dependencias/registro', data)
+    return response.data;
+}
