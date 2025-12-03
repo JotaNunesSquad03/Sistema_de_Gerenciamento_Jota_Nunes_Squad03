@@ -180,16 +180,6 @@ export const useDashboard = () => {
     }
   }, [showTechnicalDetails, selectedRecord]);
 
-  useEffect(() => {
-    if (showTechnicalDetails && selectedRecord) {
-      setDocForm((prev) => ({
-        ...prev,
-        TABELA: selectedRecord.origem,
-        ID_REGISTRO: selectedRecord.id
-      }));
-    }
-  }, [showTechnicalDetails, selectedRecord]);
-
   const handleTechnicalDetails = (record) => {
     setSelectedRecord(record);
     setShowTechnicalDetails(true);
@@ -286,17 +276,14 @@ export const useDashboard = () => {
   };
 
   useEffect(() => {
-  if (!selectedRecord) return;
-
-  setDocForm({
-    TABELA: selectedRecord.origem,
-    ID_REGISTRO: selectedRecord.id,
-    DESCRICAO: "",
-    FUNCIONALIDADES: "",
-    CONFIGURACOES: "",
-    OBSERVACAO: "",
-  });
-}, [selectedRecord]);
+    if (!selectedRecord) return;
+  
+    setDocForm((prev) => ({
+      ...prev,
+      TABELA: selectedRecord.origem,
+      ID_REGISTRO: String(selectedRecord.id), 
+    }));
+  }, [selectedRecord]);
 
   const handleDeleteDocumentation = async (docID) => {
     const confirmDelete = window.confirm("Tem certeza que deseja excluir esta documentação técnica?");
