@@ -1,5 +1,6 @@
 import "./Login.scss";
 import logo from "../../../assets/logo-jotanunes.png";
+import wave from "../../../assets/red-wave.svg";
 import { BsEnvelope, BsKey, BsEye, BsEyeSlash } from "react-icons/bs";
 import { useLogin } from "../../../hooks/useLogin";
 
@@ -13,16 +14,18 @@ function Login() {
     error,
     handleSubmit,
     togglePasswordVisibility,
+    isAuthenticating, // 👈 NOVO
   } = useLogin();
 
   return (
     <div className="login-page">
       <div className="left-side">
+        <img src={wave} alt="" className="wave-bg" />
         <img src={logo} alt="Jotanunes Construtora" className="logo" />
       </div>
 
       <div className="right-side">
-        <form className="form-container" onSubmit={handleSubmit}>
+        <form className="form-container" onSubmit={(e) => handleSubmit(e)}>
           <h2>Bem vindo ao</h2>
           <h1>LiveLog</h1>
 
@@ -39,6 +42,7 @@ function Login() {
                 placeholder="exemplo@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={isAuthenticating}
               />
             </div>
           </div>
@@ -54,6 +58,7 @@ function Login() {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={isAuthenticating}
               />
             </div>
 
@@ -62,6 +67,7 @@ function Login() {
               className="toggle-password"
               onClick={togglePasswordVisibility}
               aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+              disabled={isAuthenticating}
             >
               <i>{showPassword ? <BsEyeSlash /> : <BsEye />}</i>
             </button>
@@ -69,12 +75,22 @@ function Login() {
 
           <div className="form-footer">
             <label>
-              <input type="checkbox" /> Lembrar-me
+              <input type="checkbox" disabled={isAuthenticating} /> Lembrar-me
             </label>
             <a href="#">Esqueceu a senha?</a>
           </div>
 
-          <button type="submit">Login</button>
+          {/* Botão com estado de autenticação */}
+          <button type="submit" disabled={isAuthenticating}>
+            {isAuthenticating ? "Autenticando..." : "Login"}
+          </button>
+
+          {/* Barrinha de progresso de autenticação */}
+          {isAuthenticating && (
+            <div className="auth-status">
+              <div className="auth-bar" />
+            </div>
+          )}
 
           <p>
             Não tem uma conta? <a href="#">Registrar</a>

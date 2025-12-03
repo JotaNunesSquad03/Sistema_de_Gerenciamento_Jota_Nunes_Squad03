@@ -5,6 +5,9 @@
   display: flex;
   min-height: 100vh;
 
+  /* =====================================================
+     LEFT SIDE — GRID + ONDA ANIMADA
+  ===================================================== */
   .left-side {
     flex: 1;
     background-color: #1a1a1a;
@@ -12,20 +15,55 @@
     align-items: center;
     justify-content: center;
     padding: 2rem;
+    position: relative;
+    overflow: hidden;
 
-    @media (max-width: 1200px) and (min-width: 1025px) {
-      flex: 0.4;
+    /* GRID PRINCIPAL */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.25;
+      pointer-events: none;
     }
 
-    @media (max-width: 1024px) {
-      display: none;
+    /* GRID FINO */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 10px 10px;
+      opacity: 0.18;
+      pointer-events: none;
     }
 
+    /* ONDA FLUIDA ANIMADA */
+    .wave-bg {
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      width: 200%;
+      opacity: 0.5;
+      z-index: 1;
+      pointer-events: none;
+      transform-origin: center;
+      animation: waveSoft 10s ease-in-out infinite;
+    }
+
+    /* LOGO */
     .logo {
       max-width: 350px;
       width: 100%;
       height: auto;
-      text-align: center;
+      position: relative;
+      z-index: 3;
       transition: all 0.3s ease;
 
       @media (max-width: 1200px) {
@@ -36,8 +74,35 @@
         max-width: 250px;
       }
     }
+
+    @media (max-width: 1200px) and (min-width: 1025px) {
+      flex: 0.4;
+    }
+
+    @media (max-width: 1024px) {
+      display: none;
+    }
   }
 
+  /* ANIMAÇÃO DA ONDA — ondulação suave */
+  @keyframes waveSoft {
+    0% {
+      transform: translateX(0) scaleY(1) rotate(-2deg);
+      opacity: 0.45;
+    }
+    50% {
+      transform: translateX(0) scaleY(1.05) rotate(-1deg);
+      opacity: 0.55;
+    }
+    100% {
+      transform: translateX(0) scaleY(1) rotate(-2deg);
+      opacity: 0.45;
+    }
+  }
+
+  /* =====================================================
+     RIGHT SIDE — FORMULÁRIO
+  ===================================================== */
   .right-side {
     flex: 1;
     background-color: #f5f5f5;
@@ -80,14 +145,14 @@
         width: 90%;
         padding: 2rem 1.5rem;
       }
-      
+
       h2 {
         font-size: 2rem;
         color: #000;
         margin-bottom: -0.2rem;
         font-weight: 400;
       }
-      
+
       h1 {
         font-size: 2.5rem;
         font-weight: 700;
@@ -106,7 +171,7 @@
         margin-bottom: 1.5rem;
         background: #e8e8e8;
         transition: background-color 0.3s;
-        
+
         &:focus-within {
           background: #d8d8d8;
         }
@@ -123,7 +188,7 @@
           display: flex;
           flex-direction: column;
           flex: 1;
-          
+
           label {
             font-size: 0.9rem;
             font-weight: 500;
@@ -147,29 +212,29 @@
             }
           }
         }
-        
+
         .toggle-password {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #000;
-            transition: color 0.3s;
-            line-height: 1;
-            z-index: 1;
+          position: absolute;
+          right: 1rem;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #000;
+          transition: color 0.3s;
+          line-height: 1;
+          z-index: 1;
 
-            &:hover {
-                color: #333;
-            }
+          &:hover {
+            color: #333;
+          }
 
-            svg {
-                width: 20px;
-                height: 20px;
-                pointer-events: none;
-            }
+          svg {
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+          }
         }
       }
 
@@ -179,7 +244,7 @@
         align-items: center;
         font-size: 0.85rem;
         margin-bottom: 1rem;
-        
+
         label {
           display: flex;
           align-items: center;
@@ -192,6 +257,7 @@
           color: $primary-color;
           font-weight: 500;
           text-decoration: none;
+
           &:hover {
             text-decoration: underline;
           }
