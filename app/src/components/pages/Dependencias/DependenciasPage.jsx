@@ -1,6 +1,7 @@
 import React, { useState, useMemo,useEffect } from 'react';
 import { getDependencias, createDependencia } from '../../../services/dependenciasService';
 import './DependenciasPage.scss';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function DependenciasPage() {
   const [dependencias, setDependencias] = useState([]);
@@ -24,8 +25,24 @@ export default function DependenciasPage() {
   }
 
   const handleCreate = async () =>{
+    if(!form.nome.trim()){
+      toast.error('Nome é obrigatório!');
+      return;
+    }
+
+    if(!form.nivel_risco || isNaN(form.nivel_risco)){
+      toast.error('Nível de risco inválido!');
+      return;
+    }
+
     try{
-      await createDependencia(form);
+      await createDependencia({
+        descricao: form.nome,
+        nv_risco: Number(form.nivel_risco),
+      });
+
+      toast.success('Dependência criada com sucesso!');
+
       setOpenModal(false);
       setForm({ nome: '', nivel_risco: '' });
       loadDependencias();
