@@ -1,32 +1,36 @@
 import { useState } from "react";
-import axios from "axios";
 
 export function useLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    if (isAuthenticating) return; // impede clique duplo
+
     setError("");
 
-    try {
-      const response = await axios.post("http://localhost:8000/auth/login", {
-        email: email,
-        senha: password, // Mesmo nome esperado pela API
-      });
+    // 🔐 MOCK DE CREDENCIAIS
+    const MOCK_EMAIL = "admin@jotanunes.com";
+    const MOCK_PASS = "123456";
 
-      // Salvar token
-      localStorage.setItem("token", response.data.access_token);
+    if (email === MOCK_EMAIL && password === MOCK_PASS) {
+      // começa animação de autenticação
+      setIsAuthenticating(true);
 
-      // Redirecionar
-      window.location.href = "/dashboard";
-    } catch (err) {
+      // simula tempo de autenticação (1.8s)
+      setTimeout(() => {
+        localStorage.setItem("token", "TOKEN_MOCKADO_12345");
+        window.location.href = "/dashboard";
+      }, 1800);
+    } else {
       setError("Email ou senha incorretos.");
     }
   };
@@ -40,5 +44,6 @@ export function useLogin() {
     togglePasswordVisibility,
     error,
     handleSubmit,
+    isAuthenticating, // 👈 novo estado exposto
   };
 }
